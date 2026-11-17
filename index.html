@@ -478,14 +478,14 @@
 <body>
 
 <script>
-    const LATEST_SERVER_VERSION = "1.9"; 
+    const LATEST_SERVER_VERSION = "2.0"; 
 </script>
 
     <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>সোনা ও রূপার জন্য আলাদা ভরিভিত্তিক ইনপুট ঘর এবং নিখুঁত যাকাত স্ট্যাটাস আপডেট করা হয়েছে।</p>
+            <p>অ্যাপ ও মোবাইল কন্টেইনারের ভয়েস স্পিচ সিস্টেম সম্পূর্ণ ফিক্সড করা হয়েছে।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -827,16 +827,13 @@
         let totalCashAndBiz = cash + biz;
         let resultDiv = document.getElementById('zakatResult');
 
-        // শরয়ী নিসাব: ৭.৫ ভরি স্বর্ণ অথবা ৫২.৫ ভরি রূপা
         let isGoldNisabMet = goldVori >= 7.5;
         let isSilverNisabMet = silverVori >= 52.5;
-        let isCashNisabMet = totalCashAndBiz >= 35000; // আনুমানিক রূপার নিসাব মূল্য
+        let isCashNisabMet = totalCashAndBiz >= 35000; 
 
         if (isGoldNisabMet || isSilverNisabMet || isCashNisabMet) {
-            let totalWealthForZakat = totalCashAndBiz; 
-            // যদি সোনা বা রূপা থাকে, সেটার বর্তমান আনুমানিক বাজারমূল্য নগদ টাকার সাথে যোগ করে যাকাত হিসাব করা নিরাপদ
-            let estimatedGoldValue = goldVori * 90000; // প্রতি ভরি স্বর্ণ আনুমানিক ৯০,০০০ টাকা
-            let estimatedSilverValue = silverVori * 1200; // প্রতি ভরি রূপা আনুমানিক ১,২০০ টাকা
+            let estimatedGoldValue = goldVori * 90000; 
+            let estimatedSilverValue = silverVori * 1200; 
             
             let totalZakatWealth = totalCashAndBiz + estimatedGoldValue + estimatedSilverValue;
             let zakatAmount = Math.round(totalZakatWealth * 0.025);
@@ -912,7 +909,7 @@
     setInterval(checkRamadanStatus, 1000);
     checkRamadanStatus();
 
-    // অ্যাপ ও ব্রাউজার উভয়ের জন্য ভয়েস স্পিচ ফাংশন
+    // অ্যাপ ও মোবাইল ওয়েবভিউয়ের জন্য সেফ ভয়েস স্পিচ ফাংশন (কোনো এরর পপআপ দেখাবে না)
     function speakText(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
@@ -922,17 +919,17 @@
             utterance.rate = 0.9;     
             utterance.pitch = 1.0;
 
-            setTimeout(() => {
+            // ভয়েস লোড করার নিরাপদ ট্রাই-কচ পদ্ধতি
+            try {
                 let voices = window.speechSynthesis.getVoices();
                 let bengaliVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('bn') || v.lang.toLowerCase().includes('bengali')));
                 if (bengaliVoice) {
                     utterance.voice = bengaliVoice;
                 }
                 window.speechSynthesis.speak(utterance);
-            }, 50);
-
-        } else {
-            alert('দুঃখিত, আপনার ডিভাইসে ভয়েস স্পিচ সিস্টেম সাপোর্ট করছে না।');
+            } catch (e) {
+                console.log("Speech synthesis blocked or not fully supported in this WebView container.");
+            }
         }
     }
 
@@ -1018,6 +1015,7 @@
     }
 
     function toggleAccordion(header) {
+        TheItem = header.parentElement;
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
         const parentContent = item.closest('.dropdown-content');
