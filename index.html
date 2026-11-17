@@ -32,6 +32,24 @@
             margin: 0 auto;
         }
 
+        /* অ্যাডস বক্স ডিজাইন */
+        .ad-container {
+            background: #ffffff;
+            border: 1px dashed var(--secondary-color);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            margin: 15px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .ad-label {
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
         /* রিয়েল-টাইম ক্লক সেকশন */
         .live-clock-card {
             background: linear-gradient(135deg, #0d5c35, #138850);
@@ -371,18 +389,18 @@
 
 <script>
     /* ==========================================================
-       ⚠️ [এখানেই আপনার আপডেট ভার্সন নম্বর রয়েছে]
-       আপনি যখনই Hopweb-এ কোড পরিবর্তন করবেন, শুধু এই 
-       "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
+       ⚠️ [আপডেট নোটিফিকেশন কন্ট্রোল]
+       আপনি যখনই কোড পরিবর্তন করে গিটহাবে নতুন ফাইল আপলোড করবেন,
+       তখন শুধু এই "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
     ========================================================== */
     const LATEST_SERVER_VERSION = "1.0"; 
 </script>
 
-    <!-- আপডেট নোটিফিকেশন মোডাল -->
+    <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>অ্যাপ্লিকেশনের কোডে নতুন তথ্য বা সময়সূচি আপডেট করা হয়েছে। অ্যাপটি আপডেট করতে নিচের বাটনে ক্লিক করুন।</p>
+            <p>অ্যাপ্লিকেশনে নতুন সময়সূচি ও তথ্য আপডেট করা হয়েছে। অ্যাপটি রিফ্রেশ বা আপডেট করতে নিচের বাটনে ক্লিক করুন।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -390,6 +408,21 @@
     </div>
 
 <div class="container">
+
+    <!-- বিজ্ঞাপন ১: হেডার বা ঘড়ির ঠিক ওপরে -->
+    <div class="ad-container">
+        <span class="ad-label">✨ ইসলামিক ও কল্যাণকর সেবা (বিজ্ঞাপন)</span>
+        <script>
+          atOptions = {
+            'key' : '30769f3894bd35eb31717bb301e0a488',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bicea.org/22/30769f3894bd35eb31717bb301e0a488"></script>
+    </div>
 
     <!-- রিয়েল-টাইম ডিজিটাল ঘড়ি -->
     <div class="live-clock-card">
@@ -407,8 +440,8 @@
     <div class="masjid-board">
         <div class="board-title">🕌 আজকের নামাজের ও রমজানের সময়সূচি</div>
         <div class="prayer-time-grid">
-            <div class="prayer-item"><span class="prayer-name">ফজর (জামাত)</span><span class="prayer-time">৫:৫৫ মি.</span></div>
-            <div class="prayer-item"><span class="prayer-name">যোহর (জামাত)</span><span class="prayer-time">১:৪৬ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">ফজর (জামাত)</span><span class="prayer-time">৫:১৫ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">যোহর (জামাত)</span><span class="prayer-time">১:১৫ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">আসর (জামাত)</span><span class="prayer-time">৪:৩০ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">মাগরিব (ইফতার)</span><span class="prayer-time">৫:৫০ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">এশা ও তারাবিহ</span><span class="prayer-time">৮:১৫ মি.</span></div>
@@ -435,6 +468,21 @@
                 <tr><td>১০</td><td>১৮ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:১২ মি.</td><td>৫:৫৬ মি.</td></tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- বিজ্ঞাপন ২: টেবিল এবং কাউন্টারের মাঝামাঝি -->
+    <div class="ad-container">
+        <span class="ad-label">✨ প্রয়োজনীয় তথ্য ও অফার (বিজ্ঞাপন)</span>
+        <script>
+          atOptions = {
+            'key' : '30769f3894bd35eb31717bb301e0a488',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bicea.org/22/30769f3894bd35eb31717bb301e0a488"></script>
     </div>
 
     <!-- মাগফিরাতের ১০ দিন -->
@@ -522,7 +570,7 @@
         </div>
     </div>
 
-    <!-- গুরুত্বপূর্ণ আমল ও দোয়াসমূহ -->
+    <!-- গুরুত্বপূর্ণ আমল ও দোয়াসমূহ (নিচে রাখা হয়েছে) -->
     <div class="info-card" id="amalCard">
         <button class="main-dropdown-btn" onclick="toggleMainDropdown('amalCard')">রমজান মাসের গুরুত্বপূর্ণ আমল ও দোয়াসমূহ (দেখুন)</button>
         <div class="dropdown-content">
@@ -563,11 +611,24 @@
         </div>
     </div>
 
+    <!-- বিজ্ঞাপন ৩: একদম নিচে (ফুটারে) -->
+    <div class="ad-container">
+        <span class="ad-label">✨ প্রয়োজনীয় আপডেট ও বিজ্ঞাপন</span>
+        <script>
+          atOptions = {
+            'key' : '30769f3894bd35eb31717bb301e0a488',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bicea.org/22/30769f3894bd35eb31717bb301e0a488"></script>
+    </div>
+
 </div>
 
 <div id="toast">তসবীহ সংখ্যা সফলভাবে কপি হয়েছে!</div>
-
-<!-- ব্যাকআপ টেক্সট বক্স (ক্লিপবোর্ড কাজ না করলে এটি কাজ করবে) -->
 <textarea id="clipboardHelper" style="position: absolute; left: -9999px; top: 0;"></textarea>
 
 <script>
@@ -582,6 +643,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // অ্যাপ চালু হলে ভার্সন চেক করবে
     window.onload = function() {
         checkRealtimeUpdate();
     };
@@ -617,7 +679,6 @@
         document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); 
     }
 
-    // উন্নত ও শতভাগ কার্যকরী কপি ফাংশন
     function copyTasbihCount() {
         const currentCountText = document.getElementById('countDisplay').innerText;
         const copyText = "বর্তমান জিকির সংখ্যা: " + currentCountText;
@@ -625,7 +686,7 @@
         const helper = document.getElementById('clipboardHelper');
         helper.value = copyText;
         helper.select();
-        helper.setSelectionRange(0, 99999); // মোবাইল ডিভাইসের জন্য
+        helper.setSelectionRange(0, 99999);
 
         try {
             document.execCommand('copy');
@@ -650,7 +711,6 @@
         setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
     }
 
-    // মেইন ড্রপডাউন টগল
     function toggleMainDropdown(cardId) {
         const targetCard = document.getElementById(cardId);
         const targetContent = targetCard.querySelector('.dropdown-content');
@@ -667,7 +727,6 @@
         }
     }
 
-    // সাব-অ্যাকর্ডিয়ন টগল
     function toggleAccordion(header) {
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
@@ -695,4 +754,4 @@
 </script>
 
 </body>
-    </html>
+</html>
