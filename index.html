@@ -427,6 +427,16 @@
         .pronunciation, .meaning { font-size: 0.9rem; color: #444; margin-top: 3px; padding-bottom: 10px; }
         .pronunciation span, .meaning span { font-weight: bold; color: #2c3e50; }
 
+        /* কুইজ স্টাইল */
+        .quiz-container { background: #fff; border: 2px solid var(--secondary-color); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .quiz-container h3 { color: var(--primary-color); text-align: center; margin-bottom: 10px; }
+        .quiz-question { font-weight: bold; font-size: 0.95rem; margin-bottom: 8px; color: #222; }
+        .quiz-options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .quiz-btn { background: #f1f1f1; border: 1px solid #ccc; padding: 8px 12px; border-radius: 5px; cursor: pointer; text-align: left; font-size: 0.9rem; transition: 0.2s; }
+        .quiz-btn:hover { background: #e2e8f0; }
+        .quiz-btn.correct { background: #d4edda !important; color: #155724; border-color: #c3e6cb; font-weight: bold; }
+        .quiz-btn.wrong { background: #f8d7da !important; color: #721c24; border-color: #f5c6cb; }
+
         /* পপ-আপ আপডেট নোটিফিকেশন মোডাল */
         #updateModal {
             display: none;
@@ -478,14 +488,14 @@
 <body>
 
 <script>
-    const LATEST_SERVER_VERSION = "2.0"; 
+    const LATEST_SERVER_VERSION = "2.1"; 
 </script>
 
     <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>অ্যাপ ও মোবাইল কন্টেইনারের ভয়েস স্পিচ সিস্টেম সম্পূর্ণ ফিক্সড করা হয়েছে।</p>
+            <p>নিচে ইসলামিক কুইজ এবং ঈদের সালাতের পূর্ণাঙ্গ নিয়ম যুক্ত করা হয়েছে।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -618,7 +628,7 @@
         </div>
     </div>
 
-    <!-- কিবলা কম্পাস ফিচার (নিচে বসানো) -->
+    <!-- কিবলা কম্পাস ফিচার -->
     <div class="compass-card">
         <h3>🧭 লাইভ কিবলা কম্পাস (ক্বা’বা দিক নির্দেশক)</h3>
         <p style="font-size: 0.85rem; opacity: 0.9;">মোবাইল যেদিকে ঘোরাবেন, কম্পাস ক্যাবা শরীফের সঠিক দিক নির্দেশ করবে</p>
@@ -629,7 +639,7 @@
         <p id="compassStatus" style="font-size: 0.85rem; color: #ffaa00;">কম্পাস সেন্সর কানেক্ট হচ্ছে...</p>
     </div>
 
-    <!-- যাকাত ক্যালকুলেটর (স্বর্ণ ও রূপা আলাদা ভরিভিত্তিক ঘর) -->
+    <!-- যাকাত ক্যালকুলেটর -->
     <div class="zakat-card">
         <h3>💰 আধুনিক যাকাত ক্যালকুলেটর</h3>
         <p style="font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 10px;">নগদ টাকা, ব্যবসা এবং সোনা-রূপার পরিমাণ আলাদাভাবে লিখুন</p>
@@ -773,6 +783,51 @@
         </div>
     </div>
 
+    <!-- নতুন সংযোজন: ঈদের সালাতের পূর্ণাঙ্গ নিয়ম (সবচেয়ে নিচে) -->
+    <div class="info-card" id="eidRulesCard">
+        <button class="main-dropdown-btn" onclick="toggleMainDropdown('eidRulesCard')">🎉 ঈদের কয়টি ও কী কী এবং নামাজ পড়ার নিয়ম</button>
+        <div class="dropdown-content">
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">বিস্তারিত জানতে ক্লিক করুন:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>১. ইসলামে ঈদ কয়টি ও কী কী?</span><span class="action-text">নিয়ম দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="eid1">ইসলামে আনন্দ উদযাপনের বা ঈদের প্রধান উৎসব হলো দুটি: ১. ঈদুল ফিতর (রোজার ঈদ) এবং ২. ঈদুল আজহা (কোরবানির ঈদ)। এই দুই ঈদে জামাতের সাথে অতিরিক্ত তাকবিরসহ দুই রাকাত ওয়াজিব সালাত আদায় করা হয়।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('eid1').innerText)">🔊 শুনুন</button>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>২. ঈদের দুই রাকাত নামাজ পড়ার নিয়ম ও অতিরিক্ত তাকবির</span><span class="action-text">নিয়ম দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="eid2">ঈদের নামাজ দুই রাকাত ওয়াজিব। এতে কোনো আজান বা ইকামত নেই।<br>
+                    <strong>প্রথম রাকাত:</strong> ইমাম সাহেবের সাথে তাকবীরে তাহরিমা (আল্লাহু আকবার) বলে হাত বাঁধুন এবং সানা পড়ুন। এরপর ইমাম সাহেব অতিরিক্ত ৩টি তাকবির বলবেন। প্রতি তাকবিরে হাত কান পর্যন্ত উঠিয়ে ছেড়ে দিন (অথবা ৩য় তাকবিরে বাঁধুন)। এরপর ইমাম সূরা ফাতিহা ও অন্য সূরা পড়বেন এবং রুকুন-সিজদা শেষ করে দ্বিতীয় রাকাতে দাঁড়াবেন।<br>
+                    <strong>দ্বিতীয় রাকাত:</strong> দ্বিতীয় রাকাতে ইমাম সাহেব প্রথমে সূরা ফাতিহা ও সূরা পড়বেন। এরপর রুকুতে যাওয়ার আগে অতিরিক্ত ৩টি তাকবির বলবেন। প্রতি তাকবিরে হাত কান পর্যন্ত উঠিয়ে ছেড়ে দিতে হবে। চতুর্থ তাকবির বলে রুকুতে চলে যাবেন। এরপর স্বাভাবিক নিয়মে নামাজ শেষ করে খুতবা শুনবেন।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('eid2').innerText)">🔊 শুনুন</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- নতুন সংযোজন: ইসলামিক কুইজ কর্নার (একদম নিচে) -->
+    <div class="quiz-container">
+        <h3>❓ ইসলামিক কুইজ কর্নার</h3>
+        
+        <div class="quiz-question">১. পবিত্র কুরআনে মোট কতটি সূরা আছে?</div>
+        <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, false)">ক) ১১৪টি</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, true)">খ) ১১৪টি (সঠিক)</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false)">গ) ৩০টি</button>
+        </div>
+
+        <div class="quiz-question">২. ইসলামের প্রথম খলিফা কে ছিলেন?</div>
+        <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkQuiz(this, false)">ক) হযরত উমর (রা.)</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, true)">খ) হযরত আবু বকর (রা.)</button>
+            <button class="quiz-btn" onclick="checkQuiz(this, false)">গ) হযরত আলী (রা.)</button>
+        </div>
+    </div>
+
     <!-- বিজ্ঞাপন ৩: সবার নিচে -->
     <div class="ad-container">
         <span class="ad-label">🌙 ইসলামিক অ্যাপ ও সুন্নাহ কর্নার</span>
@@ -812,7 +867,7 @@
         document.getElementById('compassStatus').innerText = "আপনার ডিভাইস কম্পাস সাপোর্ট করে না";
     }
 
-    // যাকাত ক্যালকুলেটর (স্বর্ণ ও রূপা আলাদা ভরি এবং নগদ টাকার ভিত্তিতে সঠিক ফরজ নির্ধারণ)
+    // যাকাত ক্যালকুলেটর
     function calculateZakat() {
         let cashVal = document.getElementById('cashAmount').value.trim();
         let bizVal = document.getElementById('bizAmount').value.trim();
@@ -841,6 +896,21 @@
             resultDiv.innerText = `আপনার ওপর যাকাত ফরজ হয়েছে! মোট প্রদেয় যাকাত: ${zakatAmount} টাকা`;
         } else {
             resultDiv.innerText = `আপনার ওপর যাকাত ফরজ হয়নি। (নিসাব পরিমাণ সম্পদ নেই)`;
+        }
+    }
+
+    // কুইজ চেকার ফাংশন
+    function checkQuiz(button, isCorrect) {
+        const parent = button.parentElement;
+        const buttons = parent.querySelectorAll('.quiz-btn');
+        buttons.forEach(btn => {
+            btn.style.pointerEvents = 'none';
+            if(btn.textContent.includes('সঠিক')) {
+                btn.classList.add('correct');
+            }
+        });
+        if(!isCorrect) {
+            button.classList.add('wrong');
         }
     }
 
@@ -909,7 +979,7 @@
     setInterval(checkRamadanStatus, 1000);
     checkRamadanStatus();
 
-    // অ্যাপ ও মোবাইল ওয়েবভিউয়ের জন্য সেফ ভয়েস স্পিচ ফাংশন (কোনো এরর পপআপ দেখাবে না)
+    // নিরাপদ ভয়েস স্পিচ ফাংশন
     function speakText(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
@@ -919,7 +989,6 @@
             utterance.rate = 0.9;     
             utterance.pitch = 1.0;
 
-            // ভয়েস লোড করার নিরাপদ ট্রাই-কচ পদ্ধতি
             try {
                 let voices = window.speechSynthesis.getVoices();
                 let bengaliVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('bn') || v.lang.toLowerCase().includes('bengali')));
@@ -1015,7 +1084,6 @@
     }
 
     function toggleAccordion(header) {
-        TheItem = header.parentElement;
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
         const parentContent = item.closest('.dropdown-content');
@@ -1025,7 +1093,7 @@
                 i.classList.remove('active');
                 i.querySelector('.accordion-body').style.maxHeight = null;
                 const act = i.querySelector('.action-text');
-                if (act) act.innerText = act.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
+                if (act) act.innerText = act.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : (act.innerText.includes('নিয়ম') ? 'নিয়ম দেখুন' : 'আমল দেখুন');
             }
         });
 
@@ -1035,11 +1103,11 @@
         if (item.classList.contains('active')) {
             body.style.maxHeight = body.scrollHeight + 50 + "px";
             parentContent.style.maxHeight = parentContent.scrollHeight + body.scrollHeight + 200 + "px";
-            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : 'আমল লুকান';
+            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : (actText.innerText.includes('নিয়ম') ? 'নিয়ম লুকান' : 'আমল লুকান');
         } else {
             body.style.maxHeight = null;
             parentContent.style.maxHeight = parentContent.scrollHeight + "px";
-            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
+            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : (actText.innerText.includes('নিয়ম') ? 'নিয়ম দেখুন' : 'আমল দেখুন');
         }
     }
 </script>
