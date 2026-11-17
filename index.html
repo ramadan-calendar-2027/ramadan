@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রমজান ক্যালেন্ডার ২০২৭ ও ইসলামিক কর্নার</title>
+    <style>
+        :root {
+            --primary-color: #0d5c35;
+            --secondary-color: #d4af37;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'SolaimanLipi', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* রিয়েল-টাইম ক্লক সেকশন */
+        .live-clock-card {
+            background: linear-gradient(135deg, #0d5c35, #138850);
+            color: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .live-clock-card h2 {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 3px;
+        }
+
+        .digital-time {
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 8px 0;
+            font-family: monospace;
+        }
+
+        .digital-date {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* মসজিদ স্টাইল ডিজিটাল টাইমবোর্ড */
+        .masjid-board {
+            background: #111;
+            color: #00ffcc;
+            border: 3px solid var(--secondary-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .board-title {
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 5px;
+            font-family: 'SolaimanLipi', sans-serif;
+        }
+
+        .prayer-time-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .prayer-item {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 8px 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prayer-name {
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: 'SolaimanLipi', sans-serif;
+        }
+
+        .prayer-time {
+            color: #ffaa00;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .prayer-item.special {
+            grid-column: span 2;
+            background: #1f1400;
+            border-color: var(--secondary-color);
+        }
+
+        .prayer-item.special .prayer-name {
+            color: var(--secondary-color);
+        }
+
+        /* মেইন হেডার */
+        .main-header {
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .main-header h1 {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+        }
+
+        /* ক্যালেন্ডার টেবিল সেকশন */
+        .section-title {
+            text-align: center;
+            background: var(--secondary-color);
+            color: #000;
+            padding: 8px;
+            font-weight: bold;
+            border-radius: 6px;
+            margin: 15px 0 8px 0;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 7px 5px;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* তাসবিহ কাউন্টার সেকশন */
+        .tasbih-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tasbih-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .tasbih-count {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .tasbih-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-reset { background-color: #e74c3c; color: white; }
+        .btn-copy { background-color: var(--secondary-color); color: #000; }
+
+        /* কার্ড ও ড্রপডাউন স্টাইল */
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .main-dropdown-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .main-dropdown-btn::after { content: "▼"; font-size: 0.8rem; transition: transform 0.3s; }
+        .info-card.open .main-dropdown-btn::after { transform: rotate(180deg); }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .accordion-item {
+            margin-bottom: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-text {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            background: #e6f4ea;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .accordion-item.active .accordion-header { background-color: #e6f4ea; color: var(--primary-color); }
+        .accordion-item.active .action-text { background: var(--primary-color); color: white; }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #ffffff;
+            padding: 0 12px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .accordion-body p { padding: 10px 0; border-top: 1px dashed #eee; }
+        .arabic-text {
+            background: #fdfaf0;
+            border-right: 3px solid var(--secondary-color);
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 1.1rem;
+            text-align: right;
+            direction: rtl;
+            font-family: 'Amiri', serif;
+            border-radius: 4px;
+            color: #111;
+        }
+        .pronunciation, .meaning { font-size: 0.9rem; color: #444; margin-top: 3px; padding-bottom: 10px; }
+        .pronunciation span, .meaning span { font-weight: bold; color: #2c3e50; }
+
+        /* পপ-আপ আপডেট নোটিফিকেশন মোডাল */
+        #updateModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 3px solid var(--secondary-color);
+        }
+
+        .modal-box h3 { color: var(--primary-color); margin-bottom: 10px; }
+        .modal-box p { font-size: 0.95rem; color: #555; margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 6px; text-align: left; }
+        .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
+        .btn-modal-update { background: var(--primary-color); color: white; border: none; padding: 8px 15px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%; bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2s; }
+        @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+        @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- আপডেট নোটিফিকেশন মোডাল -->
+    <div id="updateModal">
+        <div class="modal-box">
+            <h3>🔔 নতুন আপডেট এসেছে!</h3>
+            <p>অ্যাপ্লিকেশনের কোডে নতুন তথ্য বা সময়সূচি আপডেট করা হয়েছে। অ্যাপটি আপডেট করতে নিচের বাটনে ক্লিক করুন।</p>
+            <div class="modal-btn-group">
+                <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+
+    <!-- রিয়েল-টাইম ডিজিটাল ঘড়ি -->
+    <div class="live-clock-card">
+        <h2>বাংলাদেশ স্ট্যান্ডার্ড টাইম (রিয়েল-টাইম)</h2>
+        <div class="digital-time" id="liveClock">০০:০০:০০ এএম</div>
+        <div class="digital-date" id="liveDate">লোড হচ্ছে...</div>
+    </div>
+
+    <!-- মূল শিরোনাম -->
+    <div class="main-header">
+        <h1>২০২৭ সালের ছহীহ সাহরী ও ইফতারের সময়সূচি</h1>
+    </div>
+
+    <!-- মসজিদ স্টাইল ডিজিটাল টাইমবোর্ড -->
+    <div class="masjid-board">
+        <div class="board-title">🕌 আজকের নামাজের ও রমজানের সময়সূচি</div>
+        <div class="prayer-time-grid">
+            <div class="prayer-item"><span class="prayer-name">ফজর (জামাত)</span><span class="prayer-time">৫:৩৫ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">যোহর (জামাত)</span><span class="prayer-time">১:১৫ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">আসর (জামাত)</span><span class="prayer-time">৪:৩০ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">মাগরিব (ইফতার)</span><span class="prayer-time">৫:৫০ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">এশা ও তারাবিহ</span><span class="prayer-time">৮:১৫ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">জুমআ’র জামাত</span><span class="prayer-time">১:৩০ মি.</span></div>
+            <div class="prayer-item special"><span class="prayer-name">⚠️ সেহরীর শেষ সময় (আজ)</span><span class="prayer-time">৫:১৭ মি.</span></div>
+        </div>
+    </div>
+
+    <!-- রহমতের ১০ দিন -->
+    <div class="section-title">রহমতের ১০ দিন</div>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
+            <tbody>
+                <tr><td>১</td><td>৯ ফেব্রুয়ারি</td><td>মঙ্গলবার</td><td>৫:১৭ মি.</td><td>৫:৫০ মি.</td></tr>
+                <tr><td>২</td><td>১০ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:১৭ মি.</td><td>৫:৫১ মি.</td></tr>
+                <tr><td>৩</td><td>১১ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:১৬ মি.</td><td>৫:৫২ মি.</td></tr>
+                <tr><td>৪</td><td>১২ ফেব্রুয়ারি</td><td>শুক্রবার</td><td>৫:১৬ মি.</td><td>৫:৫২ মি.</td></tr>
+                <tr><td>৫</td><td>১৩ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:১৫ মি.</td><td>৫:৫৩ মি.</td></tr>
+                <tr><td>৬</td><td>১৪ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:১৫ মি.</td><td>৫:৫৩ মি.</td></tr>
+                <tr><td>৭</td><td>১৫ ফেব্রুয়ারি</td><td>সোমবার</td><td>৫:১৪ মি.</td><td>৫:৫৪ মি.</td></tr>
+                <tr><td>৮</td><td>১৬ ফেব্রুয়ারি</td><td>মঙ্গলবার</td><td>৫:১৩ মি.</td><td>৫:৫৫ মি.</td></tr>
+                <tr><td>৯</td><td>১৭ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:১৩ মি.</td><td>৫:৫৫ মি.</td></tr>
+                <tr><td>১০</td><td>১৮ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:১২ মি.</td><td>৫:৫৬ মি.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- মাগফিরাতের ১০ দিন -->
+    <div class="section-title">মাগফিরাতের ১০ দিন</div>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
+            <tbody>
+                <tr><td>১১</td><td>১৯ ফেব্রুয়ারি</td><td>শুক্রবার</td><td>৫:১২ মি.</td><td>৫:৫৬ মি.</td></tr>
+                <tr><td>১২</td><td>২০ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:১১ মি.</td><td>৫:৫৭ মি.</td></tr>
+                <tr><td>১৩</td><td>২১ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:১০ মি.</td><td>৫:৫৭ মি.</td></tr>
+                <tr><td>১৪</td><td>২২ ফেব্রুয়ারি</td><td>সোমবার</td><td>৫:১০ মি.</td><td>৫:৫৮ মি.</td></tr>
+                <tr><td>১৫</td><td>২৩ ফেব্রুয়ারি</td><td>মঙ্গলবার</td><td>৫:০৯ মি.</td><td>৫:৫৮ মি.</td></tr>
+                <tr><td>১৬</td><td>২৪ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:০৮ মি.</td><td>৫:৫৯ মি.</td></tr>
+                <tr><td>১৭</td><td>২৫ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:০৭ মি.</td><td>৫:৫৯ মি.</td></tr>
+                <tr><td>১৮</td><td>২৬ ফেব্রুয়ারি</td><td>শুক্রবার</td><td>৫:০৭ মি.</td><td>৬:০০ মি.</td></tr>
+                <tr><td>১৯</td><td>২৭ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:০৬ মি.</td><td>৬:০০ মি.</td></tr>
+                <tr><td>২০</td><td>২৮ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:০৫ মি.</td><td>৬:০১ মি.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- নাজাতের ১০ দিন -->
+    <div class="section-title">নাজাতের ১০ দিন</div>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
+            <tbody>
+                <tr><td>২১</td><td>১ মার্চ</td><td>সোমবার</td><td>৫:০৪ মি.</td><td>৬:০১ মি.</td></tr>
+                <tr><td>২২</td><td>২ মার্চ</td><td>মঙ্গলবার</td><td>৫:০৩ মি.</td><td>৬:০২ মি.</td></tr>
+                <tr><td>২৩</td><td>৩ মার্চ</td><td>বুধবার</td><td>৫:০২ মি.</td><td>৬:০২ মি.</td></tr>
+                <tr><td>২৪</td><td>৪ মার্চ</td><td>বৃহস্পতিবার</td><td>৫:০২ মি.</td><td>৬:০৩ মি.</td></tr>
+                <tr><td>২৫</td><td>৫ মার্চ</td><td>শুক্রবার</td><td>৫:০১ মি.</td><td>৬:০৩ মি.</td></tr>
+                <tr><td>২৬</td><td>৬ মার্চ</td><td>শনিবার</td><td>৫:০০ মি.</td><td>৬:০৪ মি.</td></tr>
+                <tr><td>২৭</td><td>৭ মার্চ</td><td>রবিবার</td><td>৪:৫৯ মি.</td><td>৬:০৪ মি.</td></tr>
+                <tr><td>২৮</td><td>৮ মার্চ</td><td>সোমবার</td><td>৪:৫৮ মি.</td><td>৬:০৫ মি.</td></tr>
+                <tr><td>২৯</td><td>৯ মার্চ</td><td>মঙ্গলবার</td><td>৪:৫৭ মি.</td><td>৬:০৫ মি.</td></tr>
+                <tr><td>৩০</td><td>১০ মার্চ</td><td>বুধবার</td><td>৪:৫৬ মি.</td><td>৬:০৬ মি.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ডিজিটাল তসবীহ কাউন্টার -->
+    <div class="tasbih-card">
+        <h3>ডিজিটাল তসবীহ কাউন্টার</h3>
+        <p style="color: #666; font-size: 0.85rem;">"লা ইলাহা ইল্লাল্লাহ" বা যিকির গণনা করুন</p>
+        <div class="tasbih-count" id="countDisplay">০</div>
+        <div class="tasbih-btn-group">
+            <button class="btn btn-primary" onclick="incrementTasbih()">গণনা (+১)</button>
+            <button class="btn btn-copy" onclick="copyTasbihCount()">কপি করুন</button>
+            <button class="btn btn-reset" onclick="resetTasbih()">রিসেট</button>
+        </div>
+    </div>
+
+    <!-- গুরুত্বপূর্ণ রমজানের মাসআলা -->
+    <div class="info-card" id="masailCard">
+        <button class="main-dropdown-btn" onclick="toggleMainDropdown('masailCard')">গুরুত্বপূর্ণ রমজানের মাসআলা ও সমাধান (দেখুন)</button>
+        <div class="dropdown-content">
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">উত্তর দেখতে প্রশ্নের ওপর ক্লিক করুন:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ১: ভুলবশত খেয়ে ফেললে কি রোজা ভেঙে যায়?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: ভুলবশত (আনমনে) পানাহার করলে রোজা ভাঙে না। স্মরণ হওয়া মাত্র মুখ খালি করে রোজা চালিয়ে যেতে হবে (বুখারি)।</p></div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ২: ইনহেলার ব্যবহার করলে কি রোজা ভেঙে যাবে?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: হ্যাঁ, ইনহেলারের মাধ্যমে ঔষধ ফুসফুসে প্রবেশ করায় রোজা ভেঙে যাবে এবং পরে কাজা আদায় করতে হবে।</p></div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৩: রোজা অবস্থায় ইনজেকশন বা স্যালাইন নিলে কি রোজা ভাঙে?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: পুষ্টিহীন বা শক্তি বর্ধক নয় এমন ইনজেকশন নিলে রোজা ভাঙে না। তবে গ্লুকোজ বা স্যালাইন নিলে রোজা ভাঙবে।</p></div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৪: পেস্ট বা মাজন দিয়ে দাঁত ব্রাশ করা কি জায়েজ?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: দিনের বেলা পেস্ট বা পাউডার ব্যবহার করে ব্রাশ করা মাকরুহ। গলার ভেতর কণা চলে গেলে রোজা ভেঙে যাবে।</p></div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৫: স্বপ্নদোষ হলে কি রোজা ভেঙে যায়?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: দিনের বেলা ঘুমের মধ্যে স্বপ্নদোষ হলে রোজা ভাঙে না। তবে গোসল ফরজ হলে দ্রুত পবিত্রতা অর্জন করতে হবে।</p></div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৬: কানে পানি বা ওষুধ প্রবেশ করলে কি রোজা ভাঙে?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body"><p>উত্তর: সাধারণ গোসলে কানে পানি ঢুকলে রোজা ভাঙে না। তবে কানের পর্দা ছিদ্র থাকায় ওষুধ পেটে পৌঁছালে রোজা ভাঙতে পারে।</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- গুরুত্বপূর্ণ আমল ও দোয়াসমূহ -->
+    <div class="info-card" id="amalCard">
+        <button class="main-dropdown-btn" onclick="toggleMainDropdown('amalCard')">রমজান মাসের গুরুত্বপূর্ণ আমল ও দোয়াসমূহ (দেখুন)</button>
+        <div class="dropdown-content">
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">বিস্তারিত দেখতে আমলের ওপর ক্লিক করুন:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>১. সেহরীর শেষ রাতের আমল ও তাহাজ্জুদ</span><span class="action-text">আমল দেখুন</span></div>
+                <div class="accordion-body">
+                    <div class="arabic-text">رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا</div>
+                    <div class="pronunciation"><span>উচ্চারণ:</span> রাব্বানাগفیر লানা জুনুবানা ওয়া ইসরাফানা ফী আমরিনা।</div>
+                    <div class="meaning"><span>অর্থ:</span> হে আমাদের রব! আমাদের পাপ ও বাড়াবাড়ি ক্ষমা করে দিন। (সুরা আল-ইমরান: ১৪৭)</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>২. ইফতারের পূর্ব মুহূর্তের দোয়া</span><span class="action-text">আমল দেখুন</span></div>
+                <div class="accordion-body">
+                    <div class="arabic-text">ذَهَبَ الظَّمَأُ وَابتَلَّتِ العُرُوقُ، وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ</div>
+                    <div class="pronunciation"><span>উচ্চারণ:</span> জাহাবাজ জামাউ ওয়াবতাল্লাতিল উরুকু, ওয়া সাবাতাল আজরু ইনশাআল্লাহ।</div>
+                    <div class="meaning"><span>অর্থ:</span> তৃষ্ণা দূর হলো, শিরা সিক্ত হলো এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হলো। (আবু দাউদ)</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৩. শবে কদর বা ক্ষমা প্রার্থনার দোয়া</span><span class="action-text">আমল দেখুন</span></div>
+                <div class="accordion-body">
+                    <div class="arabic-text">اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ العَفْوَ فَاعْفُ عَنِّي</div>
+                    <div class="pronunciation"><span>উচ্চারণ:</span> আল্লাহুম্মা ইন্নাকা আফুউন তুহিব্বুল আফওয়া ফা’ফু আন্ভী।</div>
+                    <div class="meaning"><span>অর্থ:</span> হে আল্লাহ! আপনি ক্ষমাশীল, ক্ষমা ভালোবাসেন; কাজেই আমাকে ক্ষমা করুন। (তিরমিজি)</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৪. জামাতের সাথে ওয়াক্তমতো নামাজ আদায়</span><span class="action-text">আমল দেখুন</span></div>
+                <div class="accordion-body">
+                    <div class="arabic-text">حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ</div>
+                    <div class="pronunciation"><span>উচ্চারণ:</span> হাফিজু আলাস সালাওয়াতি ওয়াস সালাতিল উসতা ওয়া কুমু লিল্লাহে কানিতিন।</div>
+                    <div class="meaning"><span>অর্থ:</span> তোমরা সমস্ত নামাজ ও মধ্যবর্তী (আসর) নামাজের হিফাজত করো এবং বিনীতভাবে দাঁড়াও। (সুরা বাকারা: ২৩৮)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast">তসবীহ সংখ্যা সফলভাবে কপি হয়েছে!</div>
+
+<script>
+    // রিয়েল-টাইম ডিজিটাল ঘড়ি
+    function updateClock() {
+        const now = new Date();
+        const optionsTime = { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const optionsDate = { timeZone: 'Asia/Dhaka', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('liveClock').innerText = new Intl.DateTimeFormat('bn-BD', optionsTime).format(now);
+        document.getElementById('liveDate').innerText = new Intl.DateTimeFormat('bn-BD', optionsDate).format(now);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // অ্যাপ চালু হলে ভার্সন চেক করবে
+    window.onload = function() {
+        checkRealtimeUpdate();
+    };
+
+    function checkRealtimeUpdate() {
+        const installedVersion = localStorage.getItem('installedAppVersion');
+
+        if (!installedVersion) {
+            localStorage.setItem('installedAppVersion', LATEST_SERVER_VERSION);
+        } else if (installedVersion !== LATEST_SERVER_VERSION) {
+            document.getElementById('updateModal').style.display = 'flex';
+        }
+    }
+
+    function applyUpdate() {
+        localStorage.setItem('installedAppVersion', LATEST_SERVER_VERSION);
+        location.reload(true);
+    }
+
+    // বাংলা সংখ্যা রূপান্তর
+    function toBengaliNum(num) {
+        const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        return num.toString().split('').map(digit => !isNaN(digit) ? bengaliDigits[digit] : digit).join('');
+    }
+
+    let tasbihCount = 0;
+    function incrementTasbih() { tasbihCount++; document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); }
+    function resetTasbih() { tasbihCount = 0; document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); }
+    function copyTasbihCount() {
+        navigator.clipboard.writeText("বর্তমান জিকির সংখ্যা: " + document.getElementById('countDisplay').innerText).then(() => showToast());
+    }
+    function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "show";
+        setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
+    }
+
+    // মেইন ড্রপডাউন টগল
+    function toggleMainDropdown(cardId) {
+        const targetCard = document.getElementById(cardId);
+        const targetContent = targetCard.querySelector('.dropdown-content');
+        const isAlreadyOpen = targetCard.classList.contains('open');
+
+        document.querySelectorAll('.info-card').forEach(card => {
+            card.classList.remove('open');
+            card.querySelector('.dropdown-content').style.maxHeight = null;
+        });
+
+        if (!isAlreadyOpen) {
+            targetCard.classList.add('open');
+            targetContent.style.maxHeight = targetContent.scrollHeight + "px";
+        }
+    }
+
+    // সাব-অ্যাকর্ডিয়ন টগল (মাসআলা ও আমল)
+    function toggleAccordion(header) {
+        const item = header.parentElement;
+        const body = item.querySelector('.accordion-body');
+        const parentCard = item.closest('.dropdown-content');
+        
+        parentCard.querySelectorAll('.accordion-item').forEach(i => {
+            if (i !== item) {
+                i.classList.remove('active');
+                i.querySelector('.accordion-body').style.maxHeight = null;
+                const act = i.querySelector('.action-text');
+                if (act) act.innerText = act.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
+            }
+        });
+
+        item.classList.toggle('active');
+        const actText = item.querySelector('.action-text');
+        if (item.classList.contains('active')) {
+            body.style.maxHeight = body.scrollHeight + "px";
+            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : 'আমল লুকান';
+        } else {
+            body.style.maxHeght = null;
+            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
+        }
+    }
+</script>
+
+<!-- ==========================================================
+     ⚠️ [ভার্সন নম্বর বসানোর ঘর - একদম কোডের সবার নিচে]
+     আপনি যখনই কোডে কোনো পরিবর্তন করবেন, শুধু এই 
+     "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
+     তাহলে আগের ইনস্টল করা অ্যাপে অটোমেটিক আপডেট চলে আসবে!
+========================================================== -->
+<script>
+    const LATEST_SERVER_VERSION = "2.0"; 
+</script>
+
+</body>
+</html>
