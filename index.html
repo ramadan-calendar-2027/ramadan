@@ -478,14 +478,14 @@
 <body>
 
 <script>
-    const LATEST_SERVER_VERSION = "1.4"; 
+    const LATEST_SERVER_VERSION = "1.9"; 
 </script>
 
     <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>ড্রপডাউন ও লেখার ওভারল্যাপ বা ভেতরের ঢুকে যাওয়ার সমস্যা স্থায়ীভাবে সমাধান করা হয়েছে। আপডেট করুন।</p>
+            <p>সোনা ও রূপার জন্য আলাদা ভরিভিত্তিক ইনপুট ঘর এবং নিখুঁত যাকাত স্ট্যাটাস আপডেট করা হয়েছে।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -578,7 +578,7 @@
                 <tr><td>১৪</td><td>২২ ফেব্রুয়ারি</td><td>সোমবার</td><td>৫:১০ মি.</td><td>৫:৫৮ মি.</td></tr>
                 <tr><td>১৫</td><td>২৩ ফেব্রুয়ারি</td><td>মঙ্গলবার</td><td>৫:০৯ মি.</td><td>৫:৫৮ মি.</td></tr>
                 <tr><td>১৬</td><td>২৪ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:০৮ মি.</td><td>৫:৫৯ মি.</td></tr>
-                <tr><td>১৭</td><td>২৫ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:০৭ মি.</td><td>৫:৫৯ মি.</td></tr>
+                <tr><td>১৭</td><td>২৫ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:০৭ মি.</td><td>৫:৫৮ মি.</td></tr>
                 <tr><td>১৮</td><td>২৬ ফেব্রুয়ারি</td><td>শুক্রবার</td><td>৫:০৭ মি.</td><td>৬:০০ মি.</td></tr>
                 <tr><td>১৯</td><td>২৭ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:০৬ মি.</td><td>৬:০০ মি.</td></tr>
                 <tr><td>২০</td><td>২৮ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:০৫ মি.</td><td>৬:০১ মি.</td></tr>
@@ -629,24 +629,33 @@
         <p id="compassStatus" style="font-size: 0.85rem; color: #ffaa00;">কম্পাস সেন্সর কানেক্ট হচ্ছে...</p>
     </div>
 
-    <!-- যাকাত ক্যালকুলেটর -->
+    <!-- যাকাত ক্যালকুলেটর (স্বর্ণ ও রূপা আলাদা ভরিভিত্তিক ঘর) -->
     <div class="zakat-card">
         <h3>💰 আধুনিক যাকাত ক্যালকুলেটর</h3>
-        <p style="font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 10px;">আপনার নগদ টাকা ও সম্পদের পরিমাণ লিখে যাকাত হিসাব করুন</p>
+        <p style="font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 10px;">নগদ টাকা, ব্যবসা এবং সোনা-রূপার পরিমাণ আলাদাভাবে লিখুন</p>
+        
         <div class="zakat-form-group">
             <label>নগদ টাকা বা ব্যাংক জমানো টাকা (টাকা):</label>
             <input type="number" id="cashAmount" placeholder="যেমন: ১০০০০০" oninput="calculateZakat()">
         </div>
+        
         <div class="zakat-form-group">
             <label>ব্যবসার পণ্যের মূল্য (টাকা):</label>
             <input type="number" id="bizAmount" placeholder="যেমন: ৫০০০০" oninput="calculateZakat()">
         </div>
+
         <div class="zakat-form-group">
-            <label>স্বর্ণ বা রূপার অলঙ্কারের মূল্য (টাকা):</label>
-            <input type="number" id="goldAmount" placeholder="যেমন: ২০০০০" oninput="calculateZakat()">
+            <label>স্বর্ণের পরিমাণ (ভরি):</label>
+            <input type="number" id="goldVori" placeholder="যেমন: ১ (৭.৫ ভরি বা বেশি হলে ফরজ)" oninput="calculateZakat()">
         </div>
-        <div class="zakat-result" id="zakatResult">আপনার মোট প্রদেয় যাকাত: ০ টাকা</div>
-        <button class="voice-btn" onclick="speakText('আপনার মোট প্রদেয় যাকাত হিসাব সম্পন্ন হয়েছে।')">🔊 ফলাফল শুনে নিন</button>
+
+        <div class="zakat-form-group">
+            <label>রূপার পরিমাণ (ভরি):</label>
+            <input type="number" id="silverVori" placeholder="যেমন: ৫ (৫২.৫ ভরি বা বেশি হলে ফরজ)" oninput="calculateZakat()">
+        </div>
+
+        <div class="zakat-result" id="zakatResult">আপনার ওপর যাকাত ফরজ হয়নি।</div>
+        <button class="voice-btn" onclick="speakText(document.getElementById('zakatResult').innerText)">🔊 ফলাফল শুনে নিন</button>
     </div>
 
     <!-- ১. শ্রেষ্ঠ ও গুরুত্বপূর্ণ আমলসমূহের পূর্ণাঙ্গ তালিকা -->
@@ -756,7 +765,7 @@
                 <div class="accordion-header" onclick="toggleAccordion(this)"><span>১. সেহরীর শেষ রাতের আমল ও তাহাজ্জুদ</span><span class="action-text">আমল দেখুন</span></div>
                 <div class="accordion-body">
                     <div class="arabic-text">رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا</div>
-                    <div class="pronunciation"><span>উচ্চারণ:</span> রাব্বানাগفیر লানা জুনুবানা ওয়া ইসরাফানা ফী আমরিনা।</div>
+                    <div class="pronunciation"><span>উচ্চারণ:</span> রাব্বানাগফির লানা জুনুবানা ওয়া ইসরাফানা ফী আমরিনা।</div>
                     <p id="ans11">অর্থ: হে আমাদের রব! আমাদের পাপ ও বাড়াবাড়ি ক্ষমা করে দিন।</p>
                     <button class="voice-btn" onclick="speakText(document.getElementById('ans11').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
                 </div>
@@ -803,16 +812,39 @@
         document.getElementById('compassStatus').innerText = "আপনার ডিভাইস কম্পাস সাপোর্ট করে না";
     }
 
-    // যাকাত ক্যালকুলেটর লজিক
+    // যাকাত ক্যালকুলেটর (স্বর্ণ ও রূপা আলাদা ভরি এবং নগদ টাকার ভিত্তিতে সঠিক ফরজ নির্ধারণ)
     function calculateZakat() {
-        let cash = parseFloat(document.getElementById('cashAmount').value) || 0;
-        let biz = parseFloat(document.getElementById('bizAmount').value) || 0;
-        let gold = parseFloat(document.getElementById('goldAmount').value) || 0;
-        
-        let totalWealth = cash + biz + gold;
-        let zakat = totalWealth * 0.025;
+        let cashVal = document.getElementById('cashAmount').value.trim();
+        let bizVal = document.getElementById('bizAmount').value.trim();
+        let goldVoriVal = document.getElementById('goldVori').value.trim();
+        let silverVoriVal = document.getElementById('silverVori').value.trim();
 
-        document.getElementById('zakatResult').innerText = `আপনার মোট প্রদেয় যাকাত: ${zakat.toFixed(2)} টাকা`;
+        let cash = cashVal === "" ? 0 : parseFloat(cashVal);
+        let biz = bizVal === "" ? 0 : parseFloat(bizVal);
+        let goldVori = goldVoriVal === "" ? 0 : parseFloat(goldVoriVal);
+        let silverVori = silverVoriVal === "" ? 0 : parseFloat(silverVoriVal);
+        
+        let totalCashAndBiz = cash + biz;
+        let resultDiv = document.getElementById('zakatResult');
+
+        // শরয়ী নিসাব: ৭.৫ ভরি স্বর্ণ অথবা ৫২.৫ ভরি রূপা
+        let isGoldNisabMet = goldVori >= 7.5;
+        let isSilverNisabMet = silverVori >= 52.5;
+        let isCashNisabMet = totalCashAndBiz >= 35000; // আনুমানিক রূপার নিসাব মূল্য
+
+        if (isGoldNisabMet || isSilverNisabMet || isCashNisabMet) {
+            let totalWealthForZakat = totalCashAndBiz; 
+            // যদি সোনা বা রূপা থাকে, সেটার বর্তমান আনুমানিক বাজারমূল্য নগদ টাকার সাথে যোগ করে যাকাত হিসাব করা নিরাপদ
+            let estimatedGoldValue = goldVori * 90000; // প্রতি ভরি স্বর্ণ আনুমানিক ৯০,০০০ টাকা
+            let estimatedSilverValue = silverVori * 1200; // প্রতি ভরি রূপা আনুমানিক ১,২০০ টাকা
+            
+            let totalZakatWealth = totalCashAndBiz + estimatedGoldValue + estimatedSilverValue;
+            let zakatAmount = Math.round(totalZakatWealth * 0.025);
+
+            resultDiv.innerText = `আপনার ওপর যাকাত ফরজ হয়েছে! মোট প্রদেয় যাকাত: ${zakatAmount} টাকা`;
+        } else {
+            resultDiv.innerText = `আপনার ওপর যাকাত ফরজ হয়নি। (নিসাব পরিমাণ সম্পদ নেই)`;
+        }
     }
 
     // ৩০ দিনের দৈনিক অটো-আপডেট আমলের তালিকা
@@ -880,19 +912,37 @@
     setInterval(checkRamadanStatus, 1000);
     checkRamadanStatus();
 
-    // ভয়েস ফাংশন (শুধু উত্তর পড়ার জন্য)
+    // অ্যাপ ও ব্রাউজার উভয়ের জন্য ভয়েস স্পিচ ফাংশন
     function speakText(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
+            
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'bn-BD';
-            utterance.rate = 0.9;
-            window.speechSynthesis.speak(utterance);
+            utterance.lang = 'bn-BD'; 
+            utterance.rate = 0.9;     
+            utterance.pitch = 1.0;
+
+            setTimeout(() => {
+                let voices = window.speechSynthesis.getVoices();
+                let bengaliVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('bn') || v.lang.toLowerCase().includes('bengali')));
+                if (bengaliVoice) {
+                    utterance.voice = bengaliVoice;
+                }
+                window.speechSynthesis.speak(utterance);
+            }, 50);
+
         } else {
-            alert('দুঃখিত, আপনার ব্রাউজার ভয়েস সিস্টেম সাপোর্ট করছে না।');
+            alert('দুঃখিত, আপনার ডিভাইসে ভয়েস স্পিচ সিস্টেম সাপোর্ট করছে না।');
         }
     }
 
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = function() {
+            window.speechSynthesis.getVoices();
+        };
+    }
+
+    // অটো-আপডেট ও ক্যাশ ক্লিয়ার চেকার
     window.onload = function() {
         checkRealtimeUpdate();
     };
@@ -908,7 +958,7 @@
 
     function applyUpdate() {
         localStorage.setItem('installedAppVersion', LATEST_SERVER_VERSION);
-        location.reload(true);
+        window.location.reload(true);
     }
 
     function toBengaliNum(num) {
@@ -951,7 +1001,6 @@
         setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
     }
 
-    // ড্রপডাউন ওপেন ও হাইট ফিক্সড লজিক
     function toggleMainDropdown(cardId) {
         const targetCard = document.getElementById(cardId);
         const targetContent = targetCard.querySelector('.dropdown-content');
@@ -964,16 +1013,14 @@
 
         if (!isAlreadyOpen) {
             targetCard.classList.add('open');
-            targetContent.style.maxHeight = targetContent.scrollHeight + 500 + "px";
+            targetContent.style.maxHeight = targetContent.scrollHeight + 600 + "px";
         }
     }
 
-    // একর্ডিয়ন ওপেন ও সঠিক হাইট হিসাব লজিক
     function toggleAccordion(header) {
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
         const parentContent = item.closest('.dropdown-content');
-        const parentCard = item.closest('.info-card');
         
         parentContent.querySelectorAll('.accordion-item').forEach(i => {
             if (i !== item) {
