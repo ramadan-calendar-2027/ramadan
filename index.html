@@ -24,7 +24,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             padding: 8px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .container {
@@ -52,8 +52,8 @@
             display: block;
         }
 
-        /* রিয়েল-টাইম ক্লক সেকশন */
-        .live-clock-card {
+        /* কার্ড স্টাইল */
+        .live-clock-card, .countdown-card, .daily-amal-card, .compass-card, .zakat-card {
             background: linear-gradient(135deg, #0d5c35, #138850);
             color: white;
             border-radius: 12px;
@@ -64,10 +64,10 @@
             border: 2px solid var(--secondary-color);
         }
 
-        .live-clock-card h2 {
+        .live-clock-card h2, .countdown-card h3, .daily-amal-card h3, .compass-card h3, .zakat-card h3 {
             font-size: 1.1rem;
             color: var(--secondary-color);
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
         .digital-time {
@@ -82,6 +82,91 @@
             font-size: 1rem;
             opacity: 0.9;
         }
+
+        .countdown-timer {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffaa00;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+
+        /* কিবলা কম্পাস ডিজাইন */
+        .compass-circle {
+            width: 120px;
+            height: 120px;
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            margin: 15px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .compass-needle {
+            width: 6px;
+            height: 70px;
+            background: #ff4757;
+            position: absolute;
+            top: 15px;
+            border-radius: 3px;
+            transition: transform 0.3s ease;
+            transform-origin: bottom center;
+        }
+
+        /* দৈনিক অটো আপডেট আমল বক্স */
+        .daily-amal-card {
+            background: linear-gradient(135deg, #114b2d, #0d5c35);
+            border: 2px dashed var(--secondary-color);
+            text-align: left;
+            padding: 15px;
+        }
+
+        .daily-amal-card h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .daily-amal-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ভয়েস রিড বাটন */
+        .voice-btn {
+            background: var(--secondary-color);
+            color: #000;
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+        .voice-btn:hover { background: #e6c652; }
+
+        /* যাকাত ক্যালকুলেটর ফর্ম */
+        .zakat-card {
+            text-align: left;
+            background: #ffffff;
+            color: #333;
+            border: 2px solid var(--secondary-color);
+        }
+        .zakat-card h3 { color: var(--primary-color); text-align: center; }
+        .zakat-form-group { margin-bottom: 10px; }
+        .zakat-form-group label { font-size: 0.9rem; display: block; margin-bottom: 3px; color: #444; }
+        .zakat-form-group input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.95rem; }
+        .zakat-result { background: #e6f4ea; padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; color: var(--primary-color); margin-top: 10px; }
 
         /* মসজিদ স্টাইল ডিজিটাল টাইমবোর্ড */
         .masjid-board {
@@ -250,7 +335,7 @@
         .btn-reset { background-color: #e74c3c; color: white; }
         .btn-copy { background-color: var(--secondary-color); color: #000; }
 
-        /* কার্ড ও ড্রপডাউন স্টাইল */
+        /* কার্ড ও ড্রপডাউন ফিক্সড লেআউট */
         .info-card {
             background: var(--card-bg);
             border-radius: 10px;
@@ -283,7 +368,7 @@
         .dropdown-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out;
+            transition: max-height 0.5s ease-out;
         }
 
         .accordion-item {
@@ -319,7 +404,7 @@
         .accordion-body {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.5s ease-out;
             background-color: #ffffff;
             padding: 0 12px;
             font-size: 0.9rem;
@@ -386,23 +471,21 @@
         @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
         @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
     </style>
+    
+    <!-- নিরাপদ অ্যাড নেটওয়ার্ক কোড (হেড সেকশন) -->
+    <script data-cfasync="false" src="https://bauval.org/14/21a1a477693171abd42240c783065ea0"></script>
 </head>
 <body>
 
 <script>
-    /* ==========================================================
-       ⚠️ [আপডেট নোটিফিকেশন কন্ট্রোল]
-       আপনি যখনই কোড পরিবর্তন করে গিটহাবে নতুন ফাইল আপলোড করবেন,
-       তখন শুধু এই "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
-    ========================================================== */
-    const LATEST_SERVER_VERSION = "1.0"; 
+    const LATEST_SERVER_VERSION = "1.4"; 
 </script>
 
     <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>অ্যাপ্লিকেশনে নতুন সময়সূচি ও তথ্য আপডেট করা হয়েছে। অ্যাপটি রিফ্রেশ বা আপডেট করতে নিচের বাটনে ক্লিক করুন।</p>
+            <p>ড্রপডাউন ও লেখার ওভারল্যাপ বা ভেতরের ঢুকে যাওয়ার সমস্যা স্থায়ীভাবে সমাধান করা হয়েছে। আপডেট করুন।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -422,6 +505,20 @@
         <h2>বাংলাদেশ স্ট্যান্ডার্ড টাইম (রিয়েল-টাইম)</h2>
         <div class="digital-time" id="liveClock">০০:০০:০০ এএম</div>
         <div class="digital-date" id="liveDate">লোড হচ্ছে...</div>
+    </div>
+
+    <!-- রমজান কাউন্টডাউন অথবা দৈনিক অটো-আপডেট আমল সেকশন -->
+    <div id="dynamicSection">
+        <div class="countdown-card" id="countdownCard">
+            <h3>⏳ রমজান ২০২৭ শুরু হতে বাকি</h3>
+            <div class="countdown-timer" id="countdownTimer">হিসাব করা হচ্ছে...</div>
+        </div>
+
+        <div class="daily-amal-card" id="dailyAmalCard" style="display: none;">
+            <h3 id="dailyAmalTitle">📅 আজকের রমজানের বিশেষ আমল</h3>
+            <div class="daily-amal-content" id="dailyAmalText">লোড হচ্ছে...</div>
+            <button class="voice-btn" onclick="speakText(document.getElementById('dailyAmalText').innerText)">🔊 শুধু আজকের আমলটি শুনে নিন</button>
+        </div>
     </div>
 
     <!-- মূল শিরোনাম -->
@@ -444,7 +541,7 @@
     </div>
 
     <!-- রহমতের ১০ দিন -->
-    <div class="section-title">রহমতের ১০ দিন</div>
+    <div class="section-title">রহমতের ১০ দিন (প্রথম দশক)</div>
     <div class="table-container">
         <table>
             <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
@@ -453,8 +550,8 @@
                 <tr><td>২</td><td>১০ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:১৭ মি.</td><td>৫:৫১ মি.</td></tr>
                 <tr><td>৩</td><td>১১ ফেব্রুয়ারি</td><td>বৃহস্পতিবার</td><td>৫:১৬ মি.</td><td>৫:৫২ মি.</td></tr>
                 <tr><td>৪</td><td>১২ ফেব্রুয়ারি</td><td>শুক্রবার</td><td>৫:১৬ মি.</td><td>৫:৫২ মি.</td></tr>
-                <tr><td>৫</td><td>১৩ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:১৫ মি.</td><td>۵:۵৩ মি.</td></tr>
-                <tr><td>৬</td><td>১৪ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:১৫ মি.</td><td>৫:۵৩ মি.</td></tr>
+                <tr><td>৫</td><td>১৩ ফেব্রুয়ারি</td><td>শনিবার</td><td>৫:১৫ মি.</td><td>৫:৫৩ মি.</td></tr>
+                <tr><td>৬</td><td>১৪ ফেব্রুয়ারি</td><td>রবিবার</td><td>৫:১৫ মি.</td><td>৫:৫৩ মি.</td></tr>
                 <tr><td>৭</td><td>১৫ ফেব্রুয়ারি</td><td>সোমবার</td><td>৫:১৪ মি.</td><td>৫:৫৪ মি.</td></tr>
                 <tr><td>৮</td><td>১৬ ফেব্রুয়ারি</td><td>মঙ্গলবার</td><td>৫:১৩ মি.</td><td>৫:৫৫ মি.</td></tr>
                 <tr><td>৯</td><td>১৭ ফেব্রুয়ারি</td><td>বুধবার</td><td>৫:১৩ মি.</td><td>৫:৫৫ মি.</td></tr>
@@ -463,14 +560,14 @@
         </table>
     </div>
 
-    <!-- বিজ্ঞাপন ২: মাঝখানে (টেবিলগুলোর মাঝামাঝি) -->
+    <!-- বিজ্ঞাপন ২: মাঝখানে -->
     <div class="ad-container">
         <span class="ad-label">🌙 ইসলামিক তথ্য ও হালাল সেবা</span>
         <script data-cfasync="false" src="https://bauval.org/14/21a1a477693171abd42240c783065ea0"></script>
     </div>
 
     <!-- মাগফিরাতের ১০ দিন -->
-    <div class="section-title">মাগফিরাতের ১০ দিন</div>
+    <div class="section-title">মাগফিরাতের ১০ দিন (দ্বিতীয় দশক)</div>
     <div class="table-container">
         <table>
             <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
@@ -490,7 +587,7 @@
     </div>
 
     <!-- নাজাতের ১০ দিন -->
-    <div class="section-title">নাজাতের ১০ দিন</div>
+    <div class="section-title">নাজাতের ১০ দিন (শেষ দশক ও লাইলাতুল কদর)</div>
     <div class="table-container">
         <table>
             <thead><tr><th>রমজান</th><th>তারিখ</th><th>বার</th><th>সেহরী (শেষ)</th><th>ইফতার</th></tr></thead>
@@ -521,6 +618,111 @@
         </div>
     </div>
 
+    <!-- কিবলা কম্পাস ফিচার (নিচে বসানো) -->
+    <div class="compass-card">
+        <h3>🧭 লাইভ কিবলা কম্পাস (ক্বা’বা দিক নির্দেশক)</h3>
+        <p style="font-size: 0.85rem; opacity: 0.9;">মোবাইল যেদিকে ঘোরাবেন, কম্পাস ক্যাবা শরীফের সঠিক দিক নির্দেশ করবে</p>
+        <div class="compass-circle">
+            <div class="compass-needle" id="compassNeedle"></div>
+            <span style="font-size: 0.8rem; font-weight: bold; color: var(--secondary-color);">ক্বা'বা</span>
+        </div>
+        <p id="compassStatus" style="font-size: 0.85rem; color: #ffaa00;">কম্পাস সেন্সর কানেক্ট হচ্ছে...</p>
+    </div>
+
+    <!-- যাকাত ক্যালকুলেটর -->
+    <div class="zakat-card">
+        <h3>💰 আধুনিক যাকাত ক্যালকুলেটর</h3>
+        <p style="font-size: 0.8rem; color: #666; text-align: center; margin-bottom: 10px;">আপনার নগদ টাকা ও সম্পদের পরিমাণ লিখে যাকাত হিসাব করুন</p>
+        <div class="zakat-form-group">
+            <label>নগদ টাকা বা ব্যাংক জমানো টাকা (টাকা):</label>
+            <input type="number" id="cashAmount" placeholder="যেমন: ১০০০০০" oninput="calculateZakat()">
+        </div>
+        <div class="zakat-form-group">
+            <label>ব্যবসার পণ্যের মূল্য (টাকা):</label>
+            <input type="number" id="bizAmount" placeholder="যেমন: ৫০০০০" oninput="calculateZakat()">
+        </div>
+        <div class="zakat-form-group">
+            <label>স্বর্ণ বা রূপার অলঙ্কারের মূল্য (টাকা):</label>
+            <input type="number" id="goldAmount" placeholder="যেমন: ২০০০০" oninput="calculateZakat()">
+        </div>
+        <div class="zakat-result" id="zakatResult">আপনার মোট প্রদেয় যাকাত: ০ টাকা</div>
+        <button class="voice-btn" onclick="speakText('আপনার মোট প্রদেয় যাকাত হিসাব সম্পন্ন হয়েছে।')">🔊 ফলাফল শুনে নিন</button>
+    </div>
+
+    <!-- ১. শ্রেষ্ঠ ও গুরুত্বপূর্ণ আমলসমূহের পূর্ণাঙ্গ তালিকা -->
+    <div class="info-card" id="bestAmalCard">
+        <button class="main-dropdown-btn" onclick="toggleMainDropdown('bestAmalCard')">✨ শ্রেষ্ঠ ও গুরুত্বপূর্ণ আমলসমূহের তালিকা (সবগুলো দেখুন)</button>
+        <div class="dropdown-content">
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">বিস্তারিত পড়তে ক্লিক করুন:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>১. ঈমানের পর শ্রেষ্ঠ আমল: ওয়াক্তমতো নামাজ আদায়</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans1">উত্তর: রাসুলুল্লাহ (সা.) কে জিজ্ঞেস করা হলো, কোন আমল সবচেয়ে শ্রেষ্ঠ? তিনি বললেন, ‘সঠিক সময়ে সালাত বা নামাজ আদায় করা।’ (বুখারি)।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans1').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>২. রাত্রের শ্রেষ্ঠ নফল ইবাদত: তাহাজ্জুদ ও শেষ রাতের ইস্তিগফার</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans2">উত্তর: ফরজ নামাজের পর শ্রেষ্ঠ নামাজ হলো রাতের তাহাজ্জুদ নামাজ। শেষ রাতে আল্লাহর কাছে ক্ষমা প্রার্থনাকারীদের আল্লাহ খুব পছন্দ করেন।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans2').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৩. জিহ্বা ও লজ্জাস্থানের হেফাজতের আমল</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans3">উত্তর: যে ব্যক্তি তার দুই চোয়ালের মাঝখানের অঙ্গ অর্থাৎ জিহ্বা এবং দুই পায়ের মাঝখানের অঙ্গের হেফাজতের নিশ্চয়তা দেবে, আমি তাকে জান্নাতের গ্যারান্টি দেবো।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans3').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৪. সর্বদা বেশি বেশি জিকির ও তাসবিহ পাঠ</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans4">উত্তর: সুবহানাল্লাহ, আলহামদুলিল্লাহ, লা ইলাহা ইল্লাল্লাহ, আল্লাহু আকবার এবং আস্তাগফিরুল্লাহ নিয়মিত অধিক পরিমাণে পাঠ করা।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans4').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৫. গোপনে দান-সদকা করা</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans5">উত্তর: গোপনে দান করা আল্লাহর রাগের আগুন নিভিয়ে দেয় এবং বান্দার রিজিকের মধ্যে বরকত ও প্রশস্ততা এনে দেয়।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans5').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ২. নামাজের ওয়াক্ত, শেষ সময়, কাজা ও যাকাতের বিধান -->
+    <div class="info-card" id="prayerRulesCard">
+        <button class="main-dropdown-btn" onclick="toggleMainDropdown('prayerRulesCard')">🕌 নামাজের ওয়াক্ত, কাজা ও যাকাতের মাসআলা</button>
+        <div class="dropdown-content">
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">বিস্তারিত জানতে ক্লিক করুন:</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ১: কোন নামাজের শেষ সময় বা ওয়াক্ত কতক্ষণ থাকে?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans6">উত্তর: ফজরের ওয়াক্ত শুরু থেকে সূর্যোদয়ের আগ পর্যন্ত; যোহরের ওয়াক্ত আসরের আগ পর্যন্ত; আসরের ওয়াক্ত সূর্য হলুদ হওয়ার আগ পর্যন্ত; মাগরিবের ওয়াক্ত আযান থেকে এশার আগ পর্যন্ত এবং এশার ওয়াক্ত ফজর পর্যন্ত থাকে।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans6').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ২: নামাজ কাজা হলে করণীয় কী?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans7">উত্তর: কোনো কারণে ওয়াক্ত পার হয়ে গেলে ওই নামাজ কাজা হয়ে যায়। কাজা নামাজ ফরজ বা ওয়াজিবের নিয়তে যত দ্রুত সম্ভব আদায় করে নিতে হবে। ইচ্ছাকৃত কাজা করা কবিরা গুনাহ, তাই তওবা করতে হবে।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans7').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৩: যাকাত কাদের ওপর ফরজ এবং কী কী দেওয়া যাবে?</span><span class="action-text">উত্তর দেখুন</span></div>
+                <div class="accordion-body">
+                    <p id="ans8">উত্তর: নেসাব পরিমাণ সম্পদ (সাড়ে ৭ ভরি স্বর্ণ বা সাড়ে ৫২ ভরি রূপা বা সমপরিমাণ নগদ টাকা ও ব্যবসায়িক পণ্য) পূর্ণ এক বছর মালিকানায় থাকলে আড়াই শতাংশ হারে যাকাত ফরজ হয়। যাকাত নগদ টাকা বা খাদ্যদ্রব্য দিয়ে আদায় করা যায়।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans8').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- গুরুত্বপূর্ণ রমজানের মাসআলা -->
     <div class="info-card" id="masailCard">
         <button class="main-dropdown-btn" onclick="toggleMainDropdown('masailCard')">গুরুত্বপূর্ণ রমজানের মাসআলা ও সমাধান (দেখুন)</button>
@@ -529,27 +731,17 @@
 
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ১: ভুলবশত খেয়ে ফেললে কি রোজা ভেঙে যায়?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: ভুলবশত (আনমনে) পানাহার করলে রোজা ভাঙে না। স্মরণ হওয়া মাত্র মুখ খালি করে রোজা চালিয়ে যেতে হবে (বুখারি)।</p></div>
+                <div class="accordion-body">
+                    <p id="ans9">উত্তর: ভুলবশত আনমনে পানাহার করলে রোজা ভাঙে না। স্মরণ হওয়া মাত্র মুখ খালি করে রোজা চালিয়ে যেতে হবে।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans9').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
             </div>
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ২: ইনহেলার ব্যবহার করলে কি রোজা ভেঙে যাবে?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: হ্যাঁ, ইনহেলারের মাধ্যমে ঔষধ ফুসফুসে প্রবেশ করায় রোজা ভেঙে যাবে এবং পরে কাজা আদায় করতে হবে।</p></div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৩: রোজা অবস্থায় ইনজেকশন বা স্যালাইন নিলে কি রোজা ভাঙে?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: পুষ্টিহীন বা শক্তি বর্ধক নয় এমন ইনজেকশন নিলে রোজা ভাঙে না। তবে গ্লুকোজ বা স্যালাইন নিলে রোজা ভাঙবে।</p></div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৪: পেস্ট বা মাজন দিয়ে দাঁত ব্রাশ করা কি জায়েজ?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: দিনের বেলা পেস্ট বা পাউডার ব্যবহার করে ব্রাশ করা মাকরুহ। গলার ভেতর কণা চলে গেলে রোজা ভেঙে যাবে।</p></div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৫: স্বপ্নদোষ হলে কি রোজা ভেঙে যায়?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: দিনের বেলা ঘুমের মধ্যে স্বপ্নদোষ হলে রোজা ভাঙে না। তবে গোসল ফরজ হলে দ্রুত পবিত্রতা অর্জন করতে হবে।</p></div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>প্রশ্ন ৬: কানে পানি বা ওষুধ প্রবেশ করলে কি রোজা ভাঙে?</span><span class="action-text">উত্তর দেখুন</span></div>
-                <div class="accordion-body"><p>উত্তর: সাধারণ গোসলে কানে পানি ঢুকলে রোজা ভাঙে না। তবে কানের পর্দা ছিদ্র থাকায় ওষুধ পেটে পৌঁছালে রোজা ভাঙতে পারে।</p></div>
+                <div class="accordion-body">
+                    <p id="ans10">উত্তর: হ্যাঁ, ইনহেলারের মাধ্যমে ঔষধ ফুসফুসে প্রবেশ করায় রোজা ভেঙে যাবে এবং পরে কাজা আদায় করতে হবে।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans10').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
+                </div>
             </div>
         </div>
     </div>
@@ -565,37 +757,14 @@
                 <div class="accordion-body">
                     <div class="arabic-text">رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا</div>
                     <div class="pronunciation"><span>উচ্চারণ:</span> রাব্বানাগفیر লানা জুনুবানা ওয়া ইসরাফানা ফী আমরিনা।</div>
-                    <div class="meaning"><span>অর্থ:</span> হে আমাদের রব! আমাদের পাপ ও বাড়াবাড়ি ক্ষমা করে দিন। (সুরা আল-ইমরান: ১৪৭)</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>২. ইফতারের পূর্ব মুহূর্তের দোয়া</span><span class="action-text">আমল দেখুন</span></div>
-                <div class="accordion-body">
-                    <div class="arabic-text">ذَهَبَ الظَّمَأُ وَابتَلَّتِ العُرُوقُ، وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ</div>
-                    <div class="pronunciation"><span>উচ্চারণ:</span> জাহাবাজ জামাউ ওয়াবতাল্লাতিল উরুকু, ওয়া সাবাতাল আজরু ইনশাআল্লাহ।</div>
-                    <div class="meaning"><span>অর্থ:</span> তৃষ্ণা দূর হলো, শিরা সিক্ত হলো এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হলো। (বুখারি/আবু দাউদ)</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৩. শবে কদর বা ক্ষমা প্রার্থনার দোয়া</span><span class="action-text">আমল দেখুন</span></div>
-                <div class="accordion-body">
-                    <div class="arabic-text">اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ العَفْوَ فَاعْفُ عَنِّي</div>
-                    <div class="pronunciation"><span>উচ্চারণ:</span> আল্লাহুম্মা ইন্নাকা আফুউন তুহিব্বুল আফওয়া ফা’ফু আন্ভী।</div>
-                    <div class="meaning"><span>অর্থ:</span> হে আল্লাহ! আপনি ক্ষমাশীল, ক্ষমা ভালোবাসেন; কাজেই আমাকে ক্ষমা করুন। (তিরমিজি)</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)"><span>৪. জামাতের সাথে ওয়াক্তমতো নামাজ আদায়</span><span class="action-text">আমল দেখুন</span></div>
-                <div class="accordion-body">
-                    <div class="arabic-text">حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ وَقُومُوا لِلَّهِ قَانِتِينَ</div>
-                    <div class="pronunciation"><span>উচ্চারণ:</span> হাফিজু আলাস সালাওয়াতি ওয়াস সালাতিল উসতা ওয়া কুমু লিল্লাহে কানিতিন।</div>
-                    <div class="meaning"><span>অর্থ:</span> তোমরা সমস্ত নামাজ ও মধ্যবর্তী (আসর) নামাজের হিফাজত করো এবং বিনীতভাবে দাঁড়াও। (সুরা বাকারা: ২৩৮)</div>
+                    <p id="ans11">অর্থ: হে আমাদের রব! আমাদের পাপ ও বাড়াবাড়ি ক্ষমা করে দিন।</p>
+                    <button class="voice-btn" onclick="speakText(document.getElementById('ans11').innerText)">🔊 শুধু উত্তরটি শুনুন</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- বিজ্ঞাপন ৩: সবার নিচে (ফুটারের কাছাকাছি) -->
+    <!-- বিজ্ঞাপন ৩: সবার নিচে -->
     <div class="ad-container">
         <span class="ad-label">🌙 ইসলামিক অ্যাপ ও সুন্নাহ কর্নার</span>
         <script data-cfasync="false" src="https://bauval.org/14/21a1a477693171abd42240c783065ea0"></script>
@@ -618,7 +787,112 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // অ্যাপ চালু হলে ভার্সন চেক করবে
+    // কিবলা কম্পাস সেন্সর লজিক
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(event) {
+            let alpha = event.alpha;
+            if (alpha !== null) {
+                let qiblaDirection = (280 - alpha) % 360;
+                document.getElementById('compassNeedle').style.transform = `rotate(${qiblaDirection}deg)`;
+                document.getElementById('compassStatus').innerText = "ক্বাবার সঠিক দিক নির্দেশ করা হচ্ছে";
+            } else {
+                document.getElementById('compassStatus').innerText = "ডিভাইস ওরিয়েন্টেশন পাওয়া যায়নি";
+            }
+        }, true);
+    } else {
+        document.getElementById('compassStatus').innerText = "আপনার ডিভাইস কম্পাস সাপোর্ট করে না";
+    }
+
+    // যাকাত ক্যালকুলেটর লজিক
+    function calculateZakat() {
+        let cash = parseFloat(document.getElementById('cashAmount').value) || 0;
+        let biz = parseFloat(document.getElementById('bizAmount').value) || 0;
+        let gold = parseFloat(document.getElementById('goldAmount').value) || 0;
+        
+        let totalWealth = cash + biz + gold;
+        let zakat = totalWealth * 0.025;
+
+        document.getElementById('zakatResult').innerText = `আপনার মোট প্রদেয় যাকাত: ${zakat.toFixed(2)} টাকা`;
+    }
+
+    // ৩০ দিনের দৈনিক অটো-আপডেট আমলের তালিকা
+    const dailyAmals = {
+        1: "১ম রোজা: বেশি বেশি ইস্তিগফার করুন এবং তওবা করুন। সালাতুত তাবিহীন বা নফল ইবাদতের মাধ্যমে রমজান শুরু করুন।",
+        2: "২য় রোজা: দান-সদকা করার অভ্যাস গড়ে তুলুন। আজ অন্তত একজন গরিবকে ইফতার করান।",
+        3: "৩য় রোজা: কোরআন তেলাওয়াত বৃদ্ধি করুন। প্রতিদিন অন্তত এক পারা তেলাওয়াতের লক্ষ্য রাখুন।",
+        4: "৪র্থ রোজা: মাতা-পিতা ও আত্মীয়স্বজনের খোঁজখবর নিন এবং তাদের জন্য দোয়া করুন।",
+        5: "৫ম রোজা: জিকির ও আজকার বেশি বেশি করুন (যেমন: সুবহানাল্লাহ, আলহামদুলিল্লাহ)।",
+        6: "৬ষ্ঠ রোজা: গিবত, মিথ্যা ও অনর্থক কথা বলা থেকে সম্পূর্ণ দূরে থাকুন।",
+        7: "৭ম রোজা: তাহাজ্জুদ নামাজের নিয়ত করুন এবং শেষ রাতে আল্লাহর কাছে চোখের পানি ফেলে ক্ষমা চান।",
+        8: "৮ম রোজা: ইয়াতিম ও অসহায়দের সাহায্য করুন। তাদের মুখে হাসি ফোটানোর চেষ্টা করুন।",
+        9: "৯ম রোজা: পাঁচ ওয়াক্ত নামাজ জামাতের সাথে মসজিদে আদায় করার দৃঢ় প্রতিজ্ঞা করুন।",
+        10: "১০ম রোজা: প্রথম দশক সমাপ্তির পথে, বেশি বেশি বলুন: 'রব্বিগফির ওয়ারহাম ওয়া আনতা খাইরুর রাহিমিন'।",
+        11: "১১তম রোজা: মাগফিরাতের দশক শুরু। আল্লাহর কাছে অতীতে করা গুনাহের জন্য ক্ষমা চান।",
+        12: "১২তম রোজা: বেশি বেশি দরুদ শরীফ পাঠ করুন।",
+        13: "১৩তম রোজা: কোরআনের অর্থ ও তাফসির পড়ার চেষ্টা করুন।",
+        14: "১৪তম রোজা: হারাম উপার্জন ও সন্দেহজনক কাজ থেকে সম্পূর্ণ বেঁচে থাকার আমল করুন।",
+        15: "১৫তম রোজা: রমজানের অর্ধাংশ পার হলো, আপনার বিগত জীবনের হিসাব নিকাশ করুন।",
+        16: "১৬তম রোজা: নফল রোজা ও নফল নামাজ আদায় করুন।",
+        17: "১৭তম রোজা: বদর দিবসের ইতিহাস স্মরণ করুন এবং দ্বীনের পথে অবিচল থাকুন।",
+        18: "১৮তম রোজা: মা বাবা কিংবা মুরব্বিদের সেবা করুন।",
+        19: "১৯তম রোজা: জিকিরের পাশাপাশি আস্তাগফিরুল্লাহ পাঠের পরিমাণ বাড়িয়ে দিন।",
+        20: "২০তম রোজা: মাগফিরাতের দশকের শেষ দিন, জাহান্নাম থেকে মুক্তির প্রার্থনা করুন।",
+        21: "২১তম রোজা: নাজাতের দশক ও বিজোড় রাত শুরু! লাইলাতুল কদরের অন্বেষণে ইবাদত করুন।",
+        22: "২২তম রোজা: কোরআন তেলাওয়াত ও জিকির-আসকারে পুরো রাত মুখরিত রাখুন।",
+        23: "২৩তম রোজা: বিজোড় রাতে বিশেষ ইবাদত ও নফল নামাজ আদায় করুন।",
+        24: "২৪তম রোজা: নিজের ও সমস্ত উম্মতের মাগফিরাত ও হেদায়েতের জন্য দোয়া করুন।",
+        25: "২৫তম রোজা: ২৫শে রমজানের রাতে তাহাজ্জুদ ও জিকির আজকারে মগ্ন থাকুন।",
+        26: "২৬তম রোজা: বেশি বেশি দান-খয়রাত ও ফিতরা আদায়ের প্রস্তুতি নিন।",
+        27: "২৭তম রোজা: সম্ভাব্য শবে কদর হিসেবে এই রাতে ইবাদত ও কোরআন তেলাওয়াত করুন।",
+        28: "২৮তম রোজা: রমজান শেষের পথে, আল্লাহর দরবারে কান্নাকাটি করুন।",
+        29: "২৯তম রোজা: ঈদুল ফিতরের আগের রাতে ইবাদত করুন।",
+        30: "৩০তম রোজা: রমজানের সমাপ্তি! সারা মাসের আমল কবুল হওয়ার জন্য দোয়া করুন।"
+    };
+
+    function checkRamadanStatus() {
+        const now = new Date();
+        const ramadanStart = new Date('2027-02-09T00:00:00+06:00');
+        const diff = ramadanStart - now;
+
+        if (diff > 0) {
+            document.getElementById('countdownCard').style.display = 'block';
+            document.getElementById('dailyAmalCard').style.display = 'none';
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdownTimer').innerText = `${days} দিন, ${hours} ঘণ্টা, ${minutes} মিনিট, ${seconds} সেকেন্ড`;
+        } else {
+            document.getElementById('countdownCard').style.display = 'none';
+            document.getElementById('dailyAmalCard').style.display = 'block';
+
+            const passedTime = now - ramadanStart;
+            let currentDay = Math.floor(passedTime / (1000 * 60 * 60 * 24)) + 1;
+            if (currentDay > 30) currentDay = 30;
+
+            document.getElementById('dailyAmalTitle').innerText = `📅 ${currentDay}তম রোজার বিশেষ আমল`;
+            document.getElementById('dailyAmalText').innerText = dailyAmals[currentDay] || "আজ বেশি বেশি কোরআন তেলাওয়াত ও জিকির করুন।";
+        }
+    }
+
+    setInterval(checkRamadanStatus, 1000);
+    checkRamadanStatus();
+
+    // ভয়েস ফাংশন (শুধু উত্তর পড়ার জন্য)
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'bn-BD';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert('দুঃখিত, আপনার ব্রাউজার ভয়েস সিস্টেম সাপোর্ট করছে না।');
+        }
+    }
+
     window.onload = function() {
         checkRealtimeUpdate();
     };
@@ -637,7 +911,6 @@
         location.reload(true);
     }
 
-    // বাংলা সংখ্যা রূপান্তর
     function toBengaliNum(num) {
         const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
         return num.toString().split('').map(digit => !isNaN(digit) ? bengaliDigits[digit] : digit).join('');
@@ -667,15 +940,7 @@
             document.execCommand('copy');
             showToast("বর্তমান জিকির সংখ্যা সফলভাবে কপি হয়েছে!");
         } catch (err) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(copyText).then(() => {
-                    showToast("বর্তমান জিকির সংখ্যা সফলভাবে কপি হয়েছে!");
-                }).catch(() => {
-                    showToast("কপি করতে সমস্যা হয়েছে!");
-                });
-            } else {
-                showToast("কপি করা যায়নি!");
-            }
+            showToast("কপি করা যায়নি!");
         }
     }
 
@@ -686,6 +951,7 @@
         setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
     }
 
+    // ড্রপডাউন ওপেন ও হাইট ফিক্সড লজিক
     function toggleMainDropdown(cardId) {
         const targetCard = document.getElementById(cardId);
         const targetContent = targetCard.querySelector('.dropdown-content');
@@ -698,16 +964,18 @@
 
         if (!isAlreadyOpen) {
             targetCard.classList.add('open');
-            targetContent.style.maxHeight = targetContent.scrollHeight + "px";
+            targetContent.style.maxHeight = targetContent.scrollHeight + 500 + "px";
         }
     }
 
+    // একর্ডিয়ন ওপেন ও সঠিক হাইট হিসাব লজিক
     function toggleAccordion(header) {
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
-        const parentCard = item.closest('.dropdown-content');
+        const parentContent = item.closest('.dropdown-content');
+        const parentCard = item.closest('.info-card');
         
-        parentCard.querySelectorAll('.accordion-item').forEach(i => {
+        parentContent.querySelectorAll('.accordion-item').forEach(i => {
             if (i !== item) {
                 i.classList.remove('active');
                 i.querySelector('.accordion-body').style.maxHeight = null;
@@ -718,11 +986,14 @@
 
         item.classList.toggle('active');
         const actText = item.querySelector('.action-text');
+        
         if (item.classList.contains('active')) {
-            body.style.maxHeight = body.scrollHeight + "px";
+            body.style.maxHeight = body.scrollHeight + 50 + "px";
+            parentContent.style.maxHeight = parentContent.scrollHeight + body.scrollHeight + 200 + "px";
             if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : 'আমল লুকান';
         } else {
             body.style.maxHeight = null;
+            parentContent.style.maxHeight = parentContent.scrollHeight + "px";
             if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
         }
     }
