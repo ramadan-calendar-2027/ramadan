@@ -369,6 +369,15 @@
 </head>
 <body>
 
+<script>
+    /* ==========================================================
+       ⚠️ [এখানেই আপনার আপডেট ভার্সন নম্বর রয়েছে]
+       আপনি যখনই Hopweb-এ কোড পরিবর্তন করবেন, শুধু এই 
+       "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
+    ========================================================== */
+    const LATEST_SERVER_VERSION = "1.0"; 
+</script>
+
     <!-- আপডেট নোটিফিকেশন মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
@@ -398,7 +407,7 @@
     <div class="masjid-board">
         <div class="board-title">🕌 আজকের নামাজের ও রমজানের সময়সূচি</div>
         <div class="prayer-time-grid">
-            <div class="prayer-item"><span class="prayer-name">ফজর (জামাত)</span><span class="prayer-time">৫:৩৫ মি.</span></div>
+            <div class="prayer-item"><span class="prayer-name">ফজর (জামাত)</span><span class="prayer-time">৫:১৫ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">যোহর (জামাত)</span><span class="prayer-time">১:১৫ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">আসর (জামাত)</span><span class="prayer-time">৪:৩০ মি.</span></div>
             <div class="prayer-item"><span class="prayer-name">মাগরিব (ইফতার)</span><span class="prayer-time">৫:৫০ মি.</span></div>
@@ -460,7 +469,7 @@
                 <tr><td>২৪</td><td>৪ মার্চ</td><td>বৃহস্পতিবার</td><td>৫:০২ মি.</td><td>৬:০৩ মি.</td></tr>
                 <tr><td>২৫</td><td>৫ মার্চ</td><td>শুক্রবার</td><td>৫:০১ মি.</td><td>৬:০৩ মি.</td></tr>
                 <tr><td>২৬</td><td>৬ মার্চ</td><td>শনিবার</td><td>৫:০০ মি.</td><td>৬:০৪ মি.</td></tr>
-                <tr><td>২৭</td><td>৭ মার্চ</td><td>রবিবার</td><td>৪:৫৯ মি.</td><td>৬:০৪ মি.</td></tr>
+                <tr><td>২৭</td><td>৭ মার্চ</td><td>রবিবার</td><td>৪:৫৮ মি.</td><td>৬:০৪ মি.</td></tr>
                 <tr><td>২৮</td><td>৮ মার্চ</td><td>সোমবার</td><td>৪:৫৮ মি.</td><td>৬:০৫ মি.</td></tr>
                 <tr><td>২৯</td><td>৯ মার্চ</td><td>মঙ্গলবার</td><td>৪:৫৭ মি.</td><td>৬:০৫ মি.</td></tr>
                 <tr><td>৩০</td><td>১০ মার্চ</td><td>বুধবার</td><td>৪:৫৬ মি.</td><td>৬:০৬ মি.</td></tr>
@@ -532,7 +541,7 @@
                 <div class="accordion-body">
                     <div class="arabic-text">ذَهَبَ الظَّمَأُ وَابتَلَّتِ العُرُوقُ، وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ</div>
                     <div class="pronunciation"><span>উচ্চারণ:</span> জাহাবাজ জামাউ ওয়াবতাল্লাতিল উরুকু, ওয়া সাবাতাল আজরু ইনশাআল্লাহ।</div>
-                    <div class="meaning"><span>অর্থ:</span> তৃষ্ণা দূর হলো, শিরা সিক্ত হলো এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হলো। (আবু দাউদ)</div>
+                    <div class="meaning"><span>অর্থ:</span> তৃষ্ণা দূর হলো, শিরা সিক্ত হলো এবং ইনশাআল্লাহ প্রতিদান নিশ্চিত হলো। (বুখারি/আবু দাউদ)</div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -558,6 +567,9 @@
 
 <div id="toast">তসবীহ সংখ্যা সফলভাবে কপি হয়েছে!</div>
 
+<!-- ব্যাকআপ টেক্সট বক্স (ক্লিপবোর্ড কাজ না করলে এটি কাজ করবে) -->
+<textarea id="clipboardHelper" style="position: absolute; left: -9999px; top: 0;"></textarea>
+
 <script>
     // রিয়েল-টাইম ডিজিটাল ঘড়ি
     function updateClock() {
@@ -570,14 +582,12 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // অ্যাপ চালু হলে ভার্সন চেক করবে
     window.onload = function() {
         checkRealtimeUpdate();
     };
 
     function checkRealtimeUpdate() {
         const installedVersion = localStorage.getItem('installedAppVersion');
-
         if (!installedVersion) {
             localStorage.setItem('installedAppVersion', LATEST_SERVER_VERSION);
         } else if (installedVersion !== LATEST_SERVER_VERSION) {
@@ -597,13 +607,45 @@
     }
 
     let tasbihCount = 0;
-    function incrementTasbih() { tasbihCount++; document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); }
-    function resetTasbih() { tasbihCount = 0; document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); }
-    function copyTasbihCount() {
-        navigator.clipboard.writeText("বর্তমান জিকির সংখ্যা: " + document.getElementById('countDisplay').innerText).then(() => showToast());
+    function incrementTasbih() { 
+        tasbihCount++; 
+        document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); 
     }
-    function showToast() {
+    
+    function resetTasbih() { 
+        tasbihCount = 0; 
+        document.getElementById('countDisplay').innerText = toBengaliNum(tasbihCount); 
+    }
+
+    // উন্নত ও শতভাগ কার্যকরী কপি ফাংশন
+    function copyTasbihCount() {
+        const currentCountText = document.getElementById('countDisplay').innerText;
+        const copyText = "বর্তমান জিকির সংখ্যা: " + currentCountText;
+        
+        const helper = document.getElementById('clipboardHelper');
+        helper.value = copyText;
+        helper.select();
+        helper.setSelectionRange(0, 99999); // মোবাইল ডিভাইসের জন্য
+
+        try {
+            document.execCommand('copy');
+            showToast("বর্তমান জিকির সংখ্যা সফলভাবে কপি হয়েছে!");
+        } catch (err) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(copyText).then(() => {
+                    showToast("বর্তমান জিকির সংখ্যা সফলভাবে কপি হয়েছে!");
+                }).catch(() => {
+                    showToast("কপি করতে সমস্যা হয়েছে!");
+                });
+            } else {
+                showToast("কপি করা যায়নি!");
+            }
+        }
+    }
+
+    function showToast(message) {
         const toast = document.getElementById("toast");
+        toast.innerText = message;
         toast.className = "show";
         setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
     }
@@ -625,7 +667,7 @@
         }
     }
 
-    // সাব-অ্যাকর্ডিয়ন টগল (মাসআলা ও আমল)
+    // সাব-অ্যাকর্ডিয়ন টগল
     function toggleAccordion(header) {
         const item = header.parentElement;
         const body = item.querySelector('.accordion-body');
@@ -646,21 +688,11 @@
             body.style.maxHeight = body.scrollHeight + "px";
             if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : 'আমল লুকান';
         } else {
-            body.style.maxHeght = null;
+            body.style.maxHeight = null;
             if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : 'আমল দেখুন';
         }
     }
 </script>
 
-<!-- ==========================================================
-     ⚠️ [ভার্সন নম্বর বসানোর ঘর - একদম কোডের সবার নিচে]
-     আপনি যখনই কোডে কোনো পরিবর্তন করবেন, শুধু এই 
-     "1.0" সংখ্যাটি বাড়িয়ে "1.1" বা "2.0" করে দেবেন।
-     তাহলে আগের ইনস্টল করা অ্যাপে অটোমেটিক আপডেট চলে আসবে!
-========================================================== -->
-<script>
-    const LATEST_SERVER_VERSION = "2.0"; 
-</script>
-
 </body>
-</html>
+    </html>
