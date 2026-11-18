@@ -488,14 +488,14 @@
 <body>
 
 <script>
-    const LATEST_SERVER_VERSION = "2.1"; 
+    const LATEST_SERVER_VERSION = "2.2"; 
 </script>
 
     <!-- আপডেট নোটিফিকেশন পপ-আপ মোডাল -->
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>নিচে ইসলামিক কুইজ এবং ঈদের সালাতের পূর্ণাঙ্গ নিয়ম যুক্ত করা হয়েছে।</p>
+            <p>অ্যাপে APK ভয়েস সিস্টেম এবং সালাতুল ঈদ ও কুইজ ফিচারের চূড়ান্ত সংস্করণ আপডেট করা হয়েছে।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -783,7 +783,7 @@
         </div>
     </div>
 
-    <!-- নতুন সংযোজন: ঈদের সালাতের পূর্ণাঙ্গ নিয়ম (সবচেয়ে নিচে) -->
+    <!-- ঈদের সালাতের পূর্ণাঙ্গ নিয়ম (সবার নিচে) -->
     <div class="info-card" id="eidRulesCard">
         <button class="main-dropdown-btn" onclick="toggleMainDropdown('eidRulesCard')">🎉 ঈদের কয়টি ও কী কী এবং নামাজ পড়ার নিয়ম</button>
         <div class="dropdown-content">
@@ -809,7 +809,7 @@
         </div>
     </div>
 
-    <!-- নতুন সংযোজন: ইসলামিক কুইজ কর্নার (একদম নিচে) -->
+    <!-- ইসলামিক কুইজ কর্নার (একদম নিচে) -->
     <div class="quiz-container">
         <h3>❓ ইসলামিক কুইজ কর্নার</h3>
         
@@ -979,7 +979,7 @@
     setInterval(checkRamadanStatus, 1000);
     checkRamadanStatus();
 
-    // নিরাপদ ভয়েস স্পিচ ফাংশন
+    // অত্যন্ত শক্তিশালী ও অ্যাপ-কম্প্যাটিবল ভয়েস স্পিচ ফাংশন (APK Fixed)
     function speakText(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
@@ -989,23 +989,27 @@
             utterance.rate = 0.9;     
             utterance.pitch = 1.0;
 
-            try {
-                let voices = window.speechSynthesis.getVoices();
+            // অ্যান্ড্রয়েড অ্যাপের WebView কন্টেইনারে ভয়েস ইঞ্জিনকে জোরপূর্বক সচল করার লজیک
+            let synth = window.speechSynthesis;
+            let speakNow = () => {
+                let voices = synth.getVoices();
                 let bengaliVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('bn') || v.lang.toLowerCase().includes('bengali')));
                 if (bengaliVoice) {
                     utterance.voice = bengaliVoice;
                 }
-                window.speechSynthesis.speak(utterance);
-            } catch (e) {
-                console.log("Speech synthesis blocked or not fully supported in this WebView container.");
-            }
-        }
-    }
+                synth.speak(utterance);
+            };
 
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = function() {
-            window.speechSynthesis.getVoices();
-        };
+            if (synth.getVoices().length > 0) {
+                speakNow();
+            } else {
+                synth.onvoiceschanged = speakNow;
+                // যদি ইভেন্ট ফায়ার না করে তবুও যেন স্পিক করে
+                setTimeout(speakNow, 100);
+            }
+        } else {
+            alert('দুঃখিত, এই ডিভাইসে ভয়েস স্পিচ সিস্টেম সাপোর্ট করছে না।');
+        }
     }
 
     // অটো-আপডেট ও ক্যাশ ক্লিয়ার চেকার
