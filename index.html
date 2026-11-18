@@ -541,7 +541,7 @@
     <div id="updateModal">
         <div class="modal-box">
             <h3>🔔 নতুন আপডেট এসেছে!</h3>
-            <p>অ্যাপে নতুন ব্যানার অ্যাড এবং ভয়েস সিস্টেম আপডেট করা হয়েছে।</p>
+            <p>অ্যাপে নতুন ব্যানার অ্যাড এবং অফলাইন মোড আপডেট করা হয়েছে।</p>
             <div class="modal-btn-group">
                 <button class="btn-modal-update" onclick="applyUpdate()">আপডেট করুন</button>
             </div>
@@ -899,6 +899,29 @@
 <textarea id="clipboardHelper" style="position: absolute; left: -9999px; top: 0;"></textarea>
 
 <script>
+    // অফলাইন মোড ও অটো অ্যাড হাইডিং লজিক
+    function handleAdsVisibility() {
+        const adContainers = document.querySelectorAll('.ad-container');
+        if (!navigator.onLine) {
+            adContainers.forEach(ad => ad.style.display = 'none');
+        } else {
+            adContainers.forEach(ad => ad.style.display = 'block');
+        }
+    }
+
+    window.addEventListener('load', handleAdsVisibility);
+    window.addEventListener('online', handleAdsVisibility);
+    window.addEventListener('offline', handleAdsVisibility);
+
+    // Service Worker রেজিস্টার (অফলাইন ব্যবহারের জন্য)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered!'))
+                .catch(err => console.log('Service Worker registration failed: ', err));
+        });
+    }
+
     // রিয়েল-টাইম ডিজিটাল ঘড়ি
     function updateClock() {
         const now = new Date();
@@ -1166,12 +1189,4 @@
             parentContent.style.maxHeight = parentContent.scrollHeight + body.scrollHeight + 200 + "px";
             if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর লুকান' : (actText.innerText.includes('নিয়ম') ? 'নিয়ম লুকান' : 'আমল লুকান');
         } else {
-            body.style.maxHeight = null;
-            parentContent.style.maxHeight = parentContent.scrollHeight + "px";
-            if (actText) actText.innerText = actText.innerText.includes('উত্তর') ? 'উত্তর দেখুন' : (actText.innerText.includes('নিয়ম') ? 'নিয়ম দেখুন' : 'আমল দেখুন');
-        }
-    }
-</script>
-
-</body>
-</html>
+            body.style.maxH</div>
