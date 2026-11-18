@@ -32,6 +32,52 @@
             margin: 0 auto;
         }
 
+        /* থ্রিডি ও আরজিবি লাইটিং নোটিশ বক্স ডিজাইন */
+        .rgb-notice-box {
+            background: linear-gradient(135deg, #111111, #1a2e22);
+            border: 2.5px solid var(--secondary-color);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            margin: 15px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        /* থ্রিডি ও আরজিবি লাইটিং শিরোনাম */
+        .rgb-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rgbAnimation 6s ease infinite;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .mic-icon {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 4px rgba(212,175,55,0.6));
+        }
+
+        .rgb-text {
+            font-size: 0.92rem;
+            font-weight: 500;
+            line-height: 1.7;
+            color: #f1f5f9;
+        }
+
+        @keyframes rgbAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* অ্যাডস বক্স ডিজাইন */
         .ad-container {
             background: #ffffff;
@@ -550,6 +596,16 @@
         </div>
     </div>
 
+    <!-- থ্রিডি ও আরজিবি লাইটিং জরুরী নোটিশ বক্স (দুই পাশে মাইক আইকন সহ) -->
+    <div class="rgb-notice-box">
+        <div class="rgb-title">
+            <span class="mic-icon">🎙️</span> জরুরী নোটিশ <span class="mic-icon">🎙️</span>
+        </div>
+        <div class="rgb-text">
+            সবাইকে অগ্রিম মাহে রমজানের শুভেচ্ছা। এটা একটি আনুমানিক ক্যালেন্ডার। খুব শীঘ্রই সঠিক তথ্য আপডেট করা হবে ধন্যবাদ। আপডেট দেওয়ার পর আপনাদের নতুন করে ডাউনলোড করতে হবে না যার যার অ্যাপ্লিকেশনে অটোমেটিক আপডেট হয়ে যাবে। সবাই ধন্যবাদ
+        </div>
+    </div>
+
     <!-- রহমতের ১০ দিন -->
     <div class="section-title">রহমতের ১০ দিন (প্রথম দশক)</div>
     <div class="table-container">
@@ -801,7 +857,7 @@
                 <div class="accordion-header" onclick="toggleAccordion(this)"><span>২. ঈদের দুই রাকাত নামাজ পড়ার নিয়ম ও অতিরিক্ত তাকবির</span><span class="action-text">নিয়ম দেখুন</span></div>
                 <div class="accordion-body">
                     <p id="eid2">ঈদের নামাজ দুই রাকাত ওয়াজিব। এতে কোনো আজান বা ইকামত নেই।<br>
-                    <strong>প্রথম রাকাত:</strong> ইমাম সাহেবের সাথে তাকবীরে তাহরিমা (আল্লাহু আকবার) বলে হাত বাঁধুন এবং সানা পড়ুন। এরপর ইমাম সাহেব অতিরিক্ত ৩টি তাকবির বলবেন। প্রতি তাকবিরে হাত কান পর্যন্ত উঠিয়ে ছেড়ে দিন (অথবা ৩য় তাকবিরে বাঁধুন)। এরপর ইমাম সূরা ফাতিহা ও অন্য সূরা পড়বেন এবং রুকুন-সিজদা শেষ করে দ্বিতীয় রাকাতে দাঁড়াবেন।<br>
+                    <strong>প্রথম রাকাত:</strong> ইমাম সাহেবের সাথে তাকবীরে তাহরিমা (আল্লাহু আকবার) বলে হাত বাঁধুন এবং সানা পড়ুন। এরপর ইমাম সাহেব অতিরিক্ত ৩টি তাকবির বলবেন। প্রতি তাকবিরে হাত কান পর্যন্ত উঠিয়ে ছেড়ে দিন (অথবা ৩য় তাকবিরে বাঁধুন)। এরপর ইমাম সূরা ফাতিহা ও অন্য সূরা পড়বেন এবং রুকুন-সিজদা শেষ করে দ্বিতীয় রাকাতে দাঁড়াবেন。<br>
                     <strong>দ্বিতীয় রাকাত:</strong> দ্বিতীয় রাকাতে ইমাম সাহেব প্রথমে সূরা ফাতিহা ও সূরা পড়বেন। এরপর রুকুতে যাওয়ার আগে অতিরিক্ত ৩টি তাকবির বলবেন। প্রতি তাকবিরে হাত কান পর্যন্ত উঠিয়ে ছেড়ে দিতে হবে। চতুর্থ তাকবির বলে রুকুতে চলে যাবেন। এরপর স্বাভাবিক নিয়মে নামাজ শেষ করে খুতবা শুনবেন।</p>
                     <button class="voice-btn" onclick="speakText(document.getElementById('eid2').innerText)">🔊 শুনুন</button>
                 </div>
@@ -989,7 +1045,6 @@
             utterance.rate = 0.9;     
             utterance.pitch = 1.0;
 
-            // অ্যান্ড্রয়েড অ্যাপের WebView কন্টেইনারে ভয়েস ইঞ্জিনকে জোরপূর্বক সচল করার লজیک
             let synth = window.speechSynthesis;
             let speakNow = () => {
                 let voices = synth.getVoices();
@@ -1004,7 +1059,6 @@
                 speakNow();
             } else {
                 synth.onvoiceschanged = speakNow;
-                // যদি ইভেন্ট ফায়ার না করে তবুও যেন স্পিক করে
                 setTimeout(speakNow, 100);
             }
         } else {
